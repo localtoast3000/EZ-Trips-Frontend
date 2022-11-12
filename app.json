@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "ez-trip",
+    "slug": "ez-trip",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": ["js", "jsx", "css", "pcss"]
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "plugins": ["@react-native-google-signin/google-signin"],
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "googleServicesFile": "./google-services.json"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "a",
+      "googleServicesFile": "./GoogleService-Info.plist"
+    }
+  }
+}

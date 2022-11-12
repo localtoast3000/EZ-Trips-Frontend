@@ -1,0 +1,70 @@
+.infoContainer {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 600px;
+  height: 45px;
+  border-radius: 25px;
+  margin: 0 10px 0 10px;
+  padding-left: 15px;
+  padding-right: 10px;
+}
+.btn {
+  padding: 10px;
+  margin-left: auto;
+}
+.label {
+  font-family: 'txt';
+}
+.contentContainer {
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: rgba(0, 0, 0, 0.458);
+  padding: 70px 20px;
+}
+.contentWrapper {
+  width: 100%;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+.modalCloseBtn {
+  align-self: flex-end;
+}
+.title {
+  font-family: 'heading';
+  font-size: 25px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.information {
+  font-family: 'txt';
+  text-align: center;
+}
+.nextBtn {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+.nextBtnTxt {
+  font-family: 'txt';
+  font-size: 16px;
+}
+.restartBtn {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+.restartBtnTxt {
+  font-family: 'txt';
+  font-size: 16px;
+}

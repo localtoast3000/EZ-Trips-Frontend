@@ -1,0 +1,29 @@
+.toolBar {
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  height: 70;
+  margin: auto;
+  align-self: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 9999;
+  justify-self: flex-end;
+  width: 100%;
+  padding: 0 10px;
+  border-top-width: 0.6px;
+}
+
+.searchBtn {
+  justify-content: center;
+  align-items: center;
+
+  width: 70;
+  height: 70;
+  bottom: 20px;
+  border-radius: 35px;
+  border: 0.6px;
+  border-color: #303030;
+  background-color: white;
+}

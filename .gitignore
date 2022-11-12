@@ -1,0 +1,25 @@
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+.vscode
+
+# macOS
+.DS_Store
+
+yarn.lock
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+
+./api/backend_request.js

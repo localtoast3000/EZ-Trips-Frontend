@@ -1,0 +1,13 @@
+.container {
+  align-items: center;
+  justify-content: center;
+  height: 130;
+}
+.barBg {
+  height: 6px;
+  border-radius: 5px;
+}
+.barPos {
+  height: 6px;
+  border-radius: 5px;
+}

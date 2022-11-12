@@ -1,0 +1,65 @@
+.slideContainer {
+  flex: 1;
+  padding: 0 25px 0 25px;
+  align-items: center;
+  bottom: 50;
+}
+.logoContainer {
+  width: 100%;
+}
+.formBtnsContainer {
+  width: 100%;
+  margin-top: 80px;
+}
+.dividerContainer {
+  flex-direction: row;
+  margin: 25px 0 25px 0;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.dividerBar {
+  width: 100px;
+  height: 2px;
+  border-radius: 2px;
+  margin: 0 25px 0 25px;
+}
+.dividerTxt {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 16;
+  font-family: 'txt';
+}
+.bottomContainer {
+  align-items: center;
+  top: 50;
+}
+.seeCatalogBtn {
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 200;
+}
+.seeCatalogTxt {
+  margin-top: 6px;
+  flex: 1;
+  font-family: 'txt';
+  font-size: 18;
+  text-align: center;
+}
+.btn {
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  border-radius: 25px;
+}
+.btnTxt {
+  font-family: 'txt';
+  font-size: 15;
+}
+.bottomBtn {
+  margin: 10px 0 10px 0;
+}

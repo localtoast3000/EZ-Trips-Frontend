@@ -1,0 +1,70 @@
+:root {
+  --container-padding: 20px;
+}
+
+.container {
+  flex: 1;
+  margin-top: 10px;
+  border-radius: 15px;
+  min-height: 300px;
+}
+
+.imageLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.407);
+  border-radius: 15px;
+}
+.imageBackground {
+  justify-content: flex-start;
+}
+.topInfos {
+  flex-direction: row;
+  z-index: 2;
+  margin-bottom: auto;
+}
+.title {
+  font-family: 'heading';
+  color: white;
+  font-size: 25;
+  padding: var(--container-padding);
+  z-index: 2;
+  border: solid white;
+}
+.heart {
+  padding: var(--container-padding);
+}
+.country {
+  color: white;
+  font-family: 'txt';
+  z-index: 2;
+  padding: var(--container-padding);
+  margin-right: auto;
+}
+.bottomInfo {
+  flex-direction: row;
+  z-index: 2;
+  padding: 0 var(--container-padding) var(--container-padding) var(--container-padding);
+}
+
+.date {
+  color: white;
+  font-family: 'txt';
+  margin-right: auto;
+}
+.totalPrice {
+  color: white;
+  font-family: 'txt';
+}
+.lowestPrice {
+  color: white;
+  font-family: 'txt';
+}
+.boldText {
+  color: white;
+  font-family: 'txtBold';
+}

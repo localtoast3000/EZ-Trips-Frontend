@@ -1,0 +1,116 @@
+.container {
+    margin-top: 50;
+    padding: 15px;
+}
+.title {
+    font-family: "heading";
+    font-size: 30px;
+
+}
+.smallTitle {
+    font-family: "txtBold";
+    font-size: 14;
+    margin-bottom: 5;
+}
+
+.statusContainer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 12;
+    margin-bottom: 5;
+}
+.status {
+    font-family: "txt";
+    font-size: 17;
+}
+.validated {
+    color : green; 
+}
+.received {
+    color : #8BC4B7;
+}
+.requested {
+    color: #C46B4D;
+}
+.cardTravel {
+    height: 210;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.summaryContainer {
+    background-color: rgba(139,196,183,0.25);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.recapTravel {
+    font-family: "txt";
+    font-size: 16;
+    padding-top: 5;
+    text-align: justify;
+}
+.totalCostContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  
+}
+.totalCostTitle {
+    font-family: "txtBold";
+    font-size: 14;
+    padding-top: 12;
+    margin-bottom: 5;
+
+}
+.cost {
+    font-family: "txt";
+    font-size: 16;
+    padding-top: 12;
+    margin-bottom: 5;
+
+}
+.buttonsContainer {
+    height: 200;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 25;
+
+}
+.textButtons {
+    font-family: "txt";
+    font-size: 16;
+    color: white;
+
+}
+.programButton {
+    background-color: #8BC4B7;
+    justify-content: center;
+    align-items: center;
+    border-radius: 35px;
+    width: 302px;
+    height: 39px;
+}
+.contact {
+    
+    flex-direction: row;
+    padding-bottom: 8;
+}
+
+.textContact {
+    padding-left: 10;
+    font-family: "txt";
+    font-size: 16;
+    margin-bottom: 12;
+
+}
+.validationButton {
+    background-color: #C46B4D;
+    justify-content: center;
+    align-items: center;
+    border-radius: 35px;
+    width: 302px;
+    height: 39px;
+}

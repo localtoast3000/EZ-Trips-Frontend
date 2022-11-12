@@ -1,0 +1,94 @@
+.container {
+  flex: 1;
+  padding: 45px 0 70px 15px;
+}
+
+.border {
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  width: 85%;
+  height: 1px;
+  margin-left: 5;
+}
+.header {
+  font-family: 'heading';
+  font-size: 50px;
+}
+.titleCard {
+  font-family: 'heading';
+  font-size: 1.5rem;
+  color: white;
+}
+.sousHeader {
+  flex-direction: row;
+  margin: 15px 0px 5px 12px;
+}
+.bottomInfo {
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.smallTitle {
+  font-family: 'txt';
+  font-size: 20;
+  margin-bottom: 5;
+  margin-left: 12;
+}
+.pdfContainer {
+  align-items: center;
+  justify-content: center;
+  border-radius: 35px;
+  margin-left: 12;
+}
+
+.topInfos {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.tripContainer {
+  margin-right: 15px;
+  width: 250;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 35px;
+}
+
+.galleryContainer {
+  height: 100px;
+  flex-direction: row;
+}
+
+.addContainer {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.addText {
+  font-family: 'txtLight';
+  font-size: 15;
+}
+.addButtonText {
+  background-color: #c46b4d;
+  font-family: 'txt';
+  font-size: 17;
+  padding-right: 5;
+  padding-left: 5;
+  border-radius: 5px;
+  margin-left: 5;
+  color: white;
+}
+
+.documentBtn {
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin: 10px 0 20px 0;
+  border-radius: 10px;
+  width: 150;
+  background-color: #c46b4d;
+}
+
+.documentBtnTxt {
+  font-family: 'txt';
+  font-size: 14px;
+  color: white;
+}

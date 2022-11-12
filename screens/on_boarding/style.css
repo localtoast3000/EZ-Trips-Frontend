@@ -1,0 +1,58 @@
+.container {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+.swipeContainer {
+  flex: 1;
+  align-items: center;
+  width: 100%;
+}
+.slideContainer {
+  align-self: flex-start;
+  margin-top: 60;
+  width: 100%;
+  height: 100%;
+  padding: 0 40px 0 40px;
+}
+.descriptionSlideHeader {
+  font-family: 'heading';
+  font-size: 30;
+  text-align: center;
+}
+.descriptionSlideText {
+  font-family: 'txt';
+  font-size: 17;
+  text-align: center;
+  margin-top: 55;
+}
+.bottomContainer {
+  flex-direction: row;
+  margin-top: auto;
+  width: 100%;
+  margin-bottom: 50;
+}
+.paddingBox {
+  flex: 1;
+  align-items: center;
+}
+.welcomeTxt {
+  flex: 1;
+  font-family: 'txt';
+  font-size: 18;
+  text-align: center;
+}
+.btn {
+  margin-top: auto;
+  justify-self: flex-end;
+  align-items: center;
+  justify-content: center;
+  width: 220;
+  height: 50px;
+  margin-bottom: 40;
+  border-radius: 25px;
+}
+.btnTxt {
+  font-family: 'txt';
+  font-size: 16;
+}
