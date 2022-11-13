@@ -9,8 +9,8 @@ import OnBoarding from './screens/on_boarding/OnBoarding';
 import MyQuotations from './screens/myquotations/MyQuotations';
 import NextStep from './screens/next_step/NextStep';
 import Quotation_Request from './screens/quotation_request/Quotation_Request';
-import Quotation_Display from './screens/Quotation_Display/Quotation_Display';
-import Profile from './screens/Profile/Profile';
+import Quotation_Display from './screens/quotation_display/Quotation_Display';
+import Profile from './screens/profile/Profile';
 import MyDocuments from './screens/mydocuments/MyDocuments';
 import MyTrips from './screens/mytrips/MyTrips';
 import { useNavigation } from '@react-navigation/native';
@@ -33,7 +33,10 @@ export default function NavigationStack() {
   }, [onBoardingIsVisible]);
 
   return (
-    <Stack.Navigator initialRouteName='OnBoarding' screenOptions={{ headerShown: false, gestureEnabled: false }}>
+    <Stack.Navigator
+      initialRouteName='OnBoarding'
+      screenOptions={{ headerShown: false, gestureEnabled: false }}
+    >
       {onBoardingIsVisible && <Stack.Screen name='OnBoarding' component={OnBoarding} />}
       <Stack.Screen name='Discover' component={Discover} />
       <Stack.Screen name='Search' component={Search} />

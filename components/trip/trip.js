@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorites, deleteFavorite } from '../../reducers/user';
 import { serverURL } from '../../api/backend_request';
-import { getMonthName } from '../../assets/helpers';
+import { getMonthName } from '../../lib/helpers';
 
 export default function Trip({
   containerStyles,

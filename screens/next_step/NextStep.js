@@ -9,7 +9,6 @@ import { useTheme } from '@react-navigation/native';
 import { loadFonts } from '../../assets/fonts/fonts';
 import LastStep from './step_info/LastStep';
 import StepInfo from './step_info/StepInfo';
-import { inspect } from '../../lib/inspector';
 
 export default function NexStep({ navigation, route: { params: data } }) {
   console.disableYellowBox = true;
@@ -23,21 +22,30 @@ export default function NexStep({ navigation, route: { params: data } }) {
   useEffect(() => {
     if (currentStep === 0) incrementStep();
   }, [currentStep]);
-  
+
   const loadedFonts = loadFonts();
   if (!loadedFonts) return <></>;
 
   return (
     <>
-      <BackgroundImageLayer source={mountImg} layerOpacity={0.1} style={styles.imageBackground} />
+      <BackgroundImageLayer
+        source={mountImg}
+        layerOpacity={0.1}
+        style={styles.imageBackground}
+      />
       <View
         style={{
           ...styles.mainContainer,
-        }}>
-          <Text style={styles.title}>Next Steps</Text>
+        }}
+      >
+        <Text style={styles.title}>Next Steps</Text>
         <AnimatedProgressPath
           containerScale={1.4}
-          containerStyle={styles.animatedPathContainer}
+          containerStyle={{
+            ...styles.animatedPathContainer,
+            top: Dimensions.get('window').height / 6.5,
+            left: Dimensions.get('window').width / 20,
+          }}
           pathColor={nextStep.animatedPath}
           pointerColor={nextStep.animatedPointer}
           pointerScale={1}
@@ -52,6 +60,8 @@ export default function NexStep({ navigation, route: { params: data } }) {
 
 function stepInfoCollection(currentStep, incrementStep) {
   const { nextStep } = useTheme();
+  const heightGrid = Dimensions.get('window').height / 6.5;
+  const widthGrid = Dimensions.get('window').width / 20;
 
   return [
     <StepInfo
@@ -66,52 +76,46 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        transform: [{ translateY: -48 }, { translateX: 50 }],
+        transform: [{ translateX: widthGrid + 50 }, { translateY: heightGrid - 195 }],
       }}
     />,
     <StepInfo
       label='Check it out'
       title='Review the quotation'
-      information={
-        `You'll get a notification once your quotation is ready, from there take your time to read it through and confirm it.`
-      }
+      information={`You'll get a notification once your quotation is ready, from there take your time to read it through and confirm it.`}
       step={2}
       currentStep={currentStep}
       incrementStep={incrementStep}
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        transform: [{ translateY: -120 }, { translateX: 220 }],
+        transform: [{ translateX: widthGrid + 185 }, { translateY: heightGrid - 270 }],
       }}
     />,
     <StepInfo
       label='Cash out'
       title='Payment'
-      information={
-        `Upon accepting the quotation, the travel agency will get in touch with you via email to review the last details and proceed with payment`
-      }
+      information={`Upon accepting the quotation, the travel agency will get in touch with you via email to review the last details and proceed with payment`}
       step={3}
       currentStep={currentStep}
       incrementStep={incrementStep}
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        transform: [{ translateY: -240 }, { translateX: 50 }],
+        transform: [{ translateX: widthGrid + 25 }, { translateY: heightGrid - 385 }],
       }}
     />,
     <StepInfo
       label='Getting ready'
       title='Add your documents'
-      information={
-        `You'll find all the details of your reservation directly on EZ TRIPS in the 'My trips' section. You can add your travel documents on your profile, in the 'My Documents' section`
-      }
+      information={`You'll find all the details of your reservation directly on EZ TRIPS in the 'My trips' section. You can add your travel documents on your profile, in the 'My Documents' section`}
       step={4}
       currentStep={currentStep}
       incrementStep={incrementStep}
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
-        width: 140,
-        transform: [{ translateY: -340 }, { translateX: 170 }],
+        width: 160,
+        transform: [{ translateX: widthGrid + 140 }, { translateY: heightGrid - 485 }],
       }}
     />,
     <LastStep
@@ -126,7 +130,7 @@ function stepInfoCollection(currentStep, incrementStep) {
         width: '80%',
         marginLeft: 0,
         left: '10%',
-        transform: [{ translateY: -470 }],
+        transform: [{ translateY: heightGrid - 615 }],
       }}
     />,
   ];

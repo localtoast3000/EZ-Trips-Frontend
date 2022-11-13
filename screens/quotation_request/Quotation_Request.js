@@ -1,20 +1,11 @@
-import {
-  Platform,
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  SliderBase,
-  TextInput,
-  Modal,
-} from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import styles from './style.css';
 import { useTheme } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { loadFonts } from '../../assets/fonts/fonts';
 import { useState, useEffect } from 'react';
 import Trip from '../../components/trip/trip';
-import { getnbDays } from '../../assets/helpers';
+import { getnbDays } from '../../lib/helpers';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment';
@@ -26,11 +17,7 @@ export default function Quotation_Request({ navigation, route: { params: props }
   const loadedFonts = loadFonts();
   const { theme } = useTheme();
   const TOKEN = useSelector((state) => state.user.value.token);
-
-  // ///// BUTTON TRAVELERS && DATEPICKER
-  //fait apparaître / disparaître la Modal
   const [modalVisible, setModalVisible] = useState(false);
-
   const [nbTravelers, setnbTravelers] = useState(1);
   const [selectedRange, setRange] = useState({});
   const [value, setValue] = useState('');
@@ -78,8 +65,6 @@ export default function Quotation_Request({ navigation, route: { params: props }
 
   if (!loadedFonts) return <></>;
 
-  ////////////////////////////////////////////////////////////MODAL FILTER - FUNCTIONS////////////////////////////////////////////////////////////
-  //gère l'incrémentation du filter Nb Travelers
   const increment = () => setnbTravelers((c) => c + 1);
   const decrement = () => (nbTravelers > 1 ? setnbTravelers((c) => c - 1) : false);
 
@@ -87,8 +72,9 @@ export default function Quotation_Request({ navigation, route: { params: props }
     <>
       <ScrollView style={styles.mainContainer}>
         <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Quotation request</Text>
+          <View>
+            <Text style={styles.header}>Quotation</Text>
+            <Text style={{ ...styles.header, ...styles.headerBottomRow }}>Request</Text>
           </View>
           {trip ? (
             <Trip
@@ -173,7 +159,7 @@ export default function Quotation_Request({ navigation, route: { params: props }
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ height: 120 }}></View>
+        <View style={{ height: 150 }}></View>
       </ScrollView>
       <BottomToolbar />
     </>

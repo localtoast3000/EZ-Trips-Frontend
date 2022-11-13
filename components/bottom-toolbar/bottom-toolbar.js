@@ -2,25 +2,18 @@ import { TouchableHighlight, View, Dimensions, Pressable } from 'react-native';
 import styles from './styles.css';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
-import SearchIcon from '../../components/icons/SearchIcon'
+import SearchIcon from '../../components/icons/SearchIcon';
 import UserIcon from '../../components/icons/UserIcon';
-import DiscoverIcon from '../../components/icons/DiscoverIcon'
-import HeartIcon from '../../components/icons/HeartIcon'
-import DocumentIcon from '../../components/icons/DocumentIcon'
-
+import DiscoverIcon from '../../components/icons/DiscoverIcon';
+import HeartIcon from '../../components/icons/HeartIcon';
+import DocumentIcon from '../../components/icons/DocumentIcon';
 
 export default function BottomToolbar() {
   const navigation = useNavigation();
   const route = useRoute();
 
-
-
-
-
   return (
-
     <View style={styles.toolBar}>
-
       <DiscoverIcon
         stroke={4}
         scale={0.5}
@@ -29,7 +22,6 @@ export default function BottomToolbar() {
       />
 
       <HeartIcon
-
         stroke={4}
         scale={0.5}
         color={route.name === 'MyTrips' ? '#C46B4D' : 'black'}
@@ -38,10 +30,16 @@ export default function BottomToolbar() {
 
       <TouchableHighlight
         activeOpacity={0.6}
-        underlayColor="#DDDDDD"
+        underlayColor='#DDDDDD'
         style={styles.searchBtn}
-        onPress={() => navigation.navigate('Search')}>
-        <SearchIcon style={styles.icon} color={route.name === 'Search' ? '#C46B4D' : 'black'} scale={0.5} stroke={4} />
+        onPress={() => navigation.navigate('Search')}
+      >
+        <SearchIcon
+          style={styles.icon}
+          color={route.name === 'Search' ? '#C46B4D' : 'black'}
+          scale={0.5}
+          stroke={4}
+        />
       </TouchableHighlight>
 
       <DocumentIcon
@@ -57,7 +55,5 @@ export default function BottomToolbar() {
         onPress={() => navigation.navigate('Profile')}
       />
     </View>
-
-
   );
 }

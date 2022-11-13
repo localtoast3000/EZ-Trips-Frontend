@@ -1,116 +1,137 @@
-.container {
-    margin-top: 50;
-    padding: 15px;
+.mainContainer {
+  padding: 40px 15px 0 15px;
 }
-.title {
-    font-family: "heading";
-    font-size: 30px;
 
+.tripCardContainer {
+  margin-right: 20px;
+  width: 100%;
+  height: 230px;
+  margin-bottom: 15px;
+}
+.tripCardheart {
+  padding: 20px;
+}
+.tripCardCountry {
+  padding: 20px;
+}
+.tripCardTitle {
+  justify-self: flex-start;
+  font-size: 27px;
+  max-width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.tripCardDate {
+  max-width: 150px;
+  font-size: 16px;
+  padding: 0 0 20px 20px;
+}
+.tripCardPrice {
+  font-size: 16px;
+  padding: 0 20px 20px 0;
+}
+
+.title {
+  font-family: 'heading';
+  font-size: 30px;
 }
 .smallTitle {
-    font-family: "txtBold";
-    font-size: 14;
-    margin-bottom: 5;
+  font-family: 'txtBold';
+  font-size: 14;
+  margin-bottom: 5;
 }
 
 .statusContainer {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    margin-top: 12;
-    margin-bottom: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 12;
+  margin-bottom: 5;
 }
 .status {
-    font-family: "txt";
-    font-size: 17;
+  font-family: 'txt';
+  font-size: 17;
 }
 .validated {
-    color : green; 
+  color: green;
 }
 .received {
-    color : #8BC4B7;
+  color: #8bc4b7;
 }
 .requested {
-    color: #C46B4D;
+  color: #c46b4d;
 }
 .cardTravel {
-    height: 210;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 210;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .summaryContainer {
-    background-color: rgba(139,196,183,0.25);
-    border-radius: 15px;
-    padding: 15px;
+  background-color: rgba(139, 196, 183, 0.25);
+  border-radius: 15px;
+  padding: 15px;
 }
 
 .recapTravel {
-    font-family: "txt";
-    font-size: 16;
-    padding-top: 5;
-    text-align: justify;
+  font-family: 'txt';
+  font-size: 16;
+  padding-top: 5;
+  text-align: justify;
 }
 .totalCostContainer {
-    flex-direction: row;
-    justify-content: space-between;
-  
+  flex-direction: row;
+  justify-content: space-between;
 }
 .totalCostTitle {
-    font-family: "txtBold";
-    font-size: 14;
-    padding-top: 12;
-    margin-bottom: 5;
-
+  font-family: 'txtBold';
+  font-size: 14;
+  padding-top: 12;
+  margin-bottom: 5;
 }
 .cost {
-    font-family: "txt";
-    font-size: 16;
-    padding-top: 12;
-    margin-bottom: 5;
-
+  font-family: 'txt';
+  font-size: 16;
+  padding-top: 12;
+  margin-bottom: 5;
 }
 .buttonsContainer {
-    height: 200;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 25;
-
+  height: 200;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 25;
 }
 .textButtons {
-    font-family: "txt";
-    font-size: 16;
-    color: white;
-
+  font-family: 'txt';
+  font-size: 16;
+  color: white;
 }
 .programButton {
-    background-color: #8BC4B7;
-    justify-content: center;
-    align-items: center;
-    border-radius: 35px;
-    width: 302px;
-    height: 39px;
+  background-color: #8bc4b7;
+  justify-content: center;
+  align-items: center;
+  border-radius: 35px;
+  width: 302px;
+  height: 39px;
 }
 .contact {
-    
-    flex-direction: row;
-    padding-bottom: 8;
+  flex-direction: row;
+  padding-bottom: 8;
 }
 
 .textContact {
-    padding-left: 10;
-    font-family: "txt";
-    font-size: 16;
-    margin-bottom: 12;
-
+  padding-left: 10;
+  font-family: 'txt';
+  font-size: 16;
+  margin-bottom: 12;
 }
 .validationButton {
-    background-color: #C46B4D;
-    justify-content: center;
-    align-items: center;
-    border-radius: 35px;
-    width: 302px;
-    height: 39px;
+  background-color: #c46b4d;
+  justify-content: center;
+  align-items: center;
+  border-radius: 35px;
+  width: 302px;
+  height: 39px;
 }

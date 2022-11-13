@@ -1,30 +1,19 @@
-import {
-  Animated,
-  createAnimatedComponent,
-  SafeAreaView,
-  View,
-  FlatList,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Modal,
-  Linking,
-} from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, Modal } from 'react-native';
 
 import styles from './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFonts } from '../../assets/fonts/fonts';
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import { serverURL } from '../../api/backend_request';
-import { Directions, ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps';
 import Cross from '../../components/icons/cross';
 import ShowMore from 'react-native-show-more-button';
 import Scroll from '../../components/icons/scrollDown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { addFavorites, deleteFavorite } from '../../reducers/user';
-import { getMonthName } from '../../assets/helpers';
+import { getMonthName } from '../../lib/helpers';
 import Slideshow from 'react-native-image-slider-show';
 const iso = require('iso-3166-1');
 
@@ -57,7 +46,7 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
       .then((data) => {
         if (data.result) {
           setTrip(data.trip);
-        } 
+        }
       });
   }, []);
 
@@ -106,7 +95,11 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
   // DISPLAY NBDAYS PROGRAM FORMAT BOUTON
   const nbDaysButtons = trip.program.map((data, i) => {
     return (
-      <TouchableOpacity onPress={() => programSetter(data)} style={styles.nbDaysModal} key={i}>
+      <TouchableOpacity
+        onPress={() => programSetter(data)}
+        style={styles.nbDaysModal}
+        key={i}
+      >
         <Text>{data.nbday} days</Text>
       </TouchableOpacity>
     );
@@ -146,7 +139,8 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
       <TouchableOpacity
         //  onPress={() => programDisplay(data)}
         style={styles.tagsModal}
-        key={i}>
+        key={i}
+      >
         <Text>{data}</Text>
       </TouchableOpacity>
     );
@@ -206,7 +200,11 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
   return (
     <View style={styles.scrollView} key={props.propsKey}>
       {/* ---------------- LANDING PAGE PHOTO BACKGROUND + INFOS PRINCIPALES ---------------- */}
-      <ImageBackground style={styles.landing} source={{ uri: trip.background }} resizeMode='cover'>
+      <ImageBackground
+        style={styles.landing}
+        source={{ uri: trip.background }}
+        resizeMode='cover'
+      >
         <HeaderButtons
           favorite={favorite}
           onHeartPress={() => handleLike()}
@@ -227,7 +225,10 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
           )}
           <Text style={styles.recapTripPrice}>Starting from {price}€ </Text>
         </View>
-        <TouchableOpacity style={styles.moreDetailsBtn} onPress={() => setModalVisible(!modalVisible)}>
+        <TouchableOpacity
+          style={styles.moreDetailsBtn}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
           <Text style={styles.moreDetailsBtnTxt}>More details</Text>
           <Scroll />
         </TouchableOpacity>
@@ -236,12 +237,13 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
 
       <Modal
         statusBarTranslucent={true}
-        animationType='slide' 
+        animationType='slide'
         visible={modalVisible}
-        presentationStyle="fullScreen"
+        presentationStyle='fullScreen'
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-        }}>
+        }}
+      >
         <View style={styles.modal}>
           <ScrollView style={styles.scrollViewModal}>
             {/* ---------------- ICONS TOP RIGHT ---------------- */}
@@ -256,7 +258,12 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
 
             {/* ---------------- CAROUSSEL PHOTOS ---------------- */}
 
-            <Slideshow scrollEnabled={false} height={250} style={styles.caroussel} dataSource={urls} />
+            <Slideshow
+              scrollEnabled={false}
+              height={250}
+              style={styles.caroussel}
+              dataSource={urls}
+            />
 
             {/* ---------------- HEADER INFOS PRINCIPALES ---------------- */}
             <View name='infosModal' style={styles.modalInfoContainer}>
@@ -269,7 +276,13 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               {/* ---------------- CARTE INFOS ORANGE + PARTENAIRE ---------------- */}
               <View style={styles.infoContainerModal}>
                 <View
-                  style={{ width: '100%', backgroundColor: 'rgba(196,107,77,0.65)', padding: 10, borderRadius: 15 }}>
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'rgba(196,107,77,0.65)',
+                    padding: 10,
+                    borderRadius: 15,
+                  }}
+                >
                   {minDay == maxDay ? (
                     <Text style={{ color: 'white' }}>{minDay} days</Text>
                   ) : (
@@ -284,14 +297,21 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
                   <Text style={{ color: 'white' }}>Starting from {price} €</Text>
                 </View>
 
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <View
+                  style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}
+                >
                   <Text style={{ color: 'black' }}>
-                    Offered by <Text style={{ color: 'black', textDecoration: 'underline' }}>EZTRIP</Text>
+                    Offered by{' '}
+                    <Text style={{ color: 'black', textDecoration: 'underline' }}>
+                      EZTRIP
+                    </Text>
                   </Text>
                 </View>
               </View>
               {/* ---------------- INCLUDED/NOT INCLUDED ---------------- */}
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View
+                style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
+              >
                 <View name='included' style={{ width: '50%', marginRight: 8 }}>
                   <Text style={styles.smallTitle}>Included :</Text>
                   <View style={{ width: '100%' }}>{included}</View>
@@ -304,12 +324,17 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               </View>
 
               {/* ---------------- MAP LOCALISATION : Ne s'affiche que si lat et lon sont définies---------------- */}
-              <View name='localisation' style={{ justifyContent: 'center', minHeight: 380, maxHeight: 380 }}>
+              <View
+                name='localisation'
+                style={{ justifyContent: 'center', minHeight: 380, maxHeight: 380 }}
+              >
                 <Text style={styles.smallTitle}>Localisation:</Text>
-                <Text>Departure from {trip.addressDeparture}, {trip.country}.</Text>
+                <Text>
+                  Departure from {trip.addressDeparture}, {trip.country}.
+                </Text>
                 {lat && lon ? (
                   <MapView
-                  zoomTapEnabled = {true}
+                    zoomTapEnabled={true}
                     zoomEnabled={true}
                     scrollEnabled={false}
                     loadingBackgroundColor='#C46B4D'
@@ -321,7 +346,8 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
                       longitude: lon,
                       latitudeDelta: 1.5,
                       longitudeDelta: 1.4,
-                    }}>
+                    }}
+                  >
                     <Marker
                       coordinate={{ latitude: lat, longitude: lon }}
                       pinColor='#C46B4D'
@@ -337,7 +363,12 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               {/* si on a le temps voir pour un "showmore"/"showless" pour pas avoir des descriptions a rallonge */}
 
               <Text style={styles.smallTitle}>Description :</Text>
-              <ShowMore height={60} buttonColor={'#c46b4d'} showMoreText='Show more' showLessText='Show less'>
+              <ShowMore
+                height={60}
+                buttonColor={'#c46b4d'}
+                showMoreText='Show more'
+                showLessText='Show less'
+              >
                 <Text ellipsizeMode='tail' style={styles.inclusModal}>
                   {trip.description}
                 </Text>
@@ -347,7 +378,12 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               <View style={styles.nbDaysContainer}>{nbDaysButtons}</View>
               <View>
                 {detailedProgram ? (
-                  <ShowMore height={150} buttonColor={'#c46b4d'} showMoreText='Show more' showLessText='Show less'>
+                  <ShowMore
+                    height={150}
+                    buttonColor={'#c46b4d'}
+                    showMoreText='Show more'
+                    showLessText='Show less'
+                  >
                     {programDisplay}
                   </ShowMore>
                 ) : (
@@ -365,8 +401,13 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               <TouchableOpacity
                 style={styles.quotationButton}
                 onPress={() =>
-                  navigation.navigate({ name: 'Quotation_Request', params: { id: props.id }, merge: true })
-                }>
+                  navigation.navigate({
+                    name: 'Quotation_Request',
+                    params: { id: props.id },
+                    merge: true,
+                  })
+                }
+              >
                 <Text style={styles.buttonTextQuotation}>Quotation request</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.programButton}>
@@ -385,7 +426,14 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
   );
 }
 
-function HeaderButtons({ containerStyle, heartActiveColor, onHeartPress, onCrossPress, iconsColor, favorite }) {
+function HeaderButtons({
+  containerStyle,
+  heartActiveColor,
+  onHeartPress,
+  onCrossPress,
+  iconsColor,
+  favorite,
+}) {
   return (
     <View style={{ ...styles.headerButtons, ...containerStyle }}>
       <TouchableOpacity style={styles.heartBtn}>
