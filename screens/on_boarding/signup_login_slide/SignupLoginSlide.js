@@ -1,4 +1,4 @@
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, Dimensions } from 'react-native';
 import styles from './style.css';
 import { useTheme } from '@react-navigation/native';
 import FadeContainer from '../../../components/fade_container/FadeContainer';
@@ -45,7 +45,11 @@ export default function SignupLogoinSlide({ progressPos, slideLength, navigation
   return (
     <>
       <FadeContainer style={styles.slideContainer} isVisible={isVisible} speed={250}>
-        <Logo containerStyle={styles.logoContainer} color={onBoarding.header} size={100} />
+        <Logo
+          containerStyle={styles.logoContainer}
+          color={onBoarding.header}
+          size={Dimensions.get('window').width / 4}
+        />
         <View style={styles.formBtnsContainer}>
           <View style={styles.btnsWrapper}>
             <FormBtn
@@ -84,7 +88,8 @@ export default function SignupLogoinSlide({ progressPos, slideLength, navigation
         statusBarTranslucent={true}
         transparent={true}
         visible={Object.values(forms).some((form) => form === true)}
-        animationType='fade'>
+        animationType='fade'
+      >
         {forms.login ? (
           <LoginForm onClosePress={() => resetForms()} navigation={navigation} />
         ) : forms.signUp ? (
@@ -99,7 +104,11 @@ export default function SignupLogoinSlide({ progressPos, slideLength, navigation
 
 function FormBtn({ style, text, onPress, txtColor }) {
   return (
-    <TouchableOpacity style={{ ...styles.btn, ...style }} onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity
+      style={{ ...styles.btn, ...style }}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
       <Text style={{ ...styles.btnTxt, color: txtColor }}>{text}</Text>
     </TouchableOpacity>
   );
@@ -110,7 +119,9 @@ function SeeCatalogBtn({ onPress }) {
 
   return (
     <TouchableOpacity style={styles.seeCatalogBtn} onPress={onPress}>
-      <Text style={{ ...styles.seeCatalogTxt, color: onBoarding.seeCatalogTxt }}>See the catalog</Text>
+      <Text style={{ ...styles.seeCatalogTxt, color: onBoarding.seeCatalogTxt }}>
+        See the catalog
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -118,12 +129,18 @@ function SeeCatalogBtn({ onPress }) {
 function BtnsDivider() {
   const { onBoarding } = useTheme();
 
-  const Bar = () => <View style={{ ...styles.dividerBar, backgroundColor: onBoarding.signupLoginDividerBar }}></View>;
+  const Bar = () => (
+    <View
+      style={{ ...styles.dividerBar, backgroundColor: onBoarding.signupLoginDividerBar }}
+    ></View>
+  );
 
   return (
     <View style={styles.dividerContainer}>
       <Bar />
-      <Text style={{ ...styles.dividerTxt, color: onBoarding.signupLoginDividerBar }}>OR</Text>
+      <Text style={{ ...styles.dividerTxt, color: onBoarding.signupLoginDividerBar }}>
+        OR
+      </Text>
       <Bar />
     </View>
   );

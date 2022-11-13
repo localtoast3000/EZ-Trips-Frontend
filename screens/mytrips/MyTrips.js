@@ -11,7 +11,6 @@ import { serverURL } from '../../api/backend_request';
 import { useSelector } from 'react-redux';
 
 export default function MyTrips({ navigation }) {
-  const tripLiked = useSelector((state) => state.user.favorites);
   const TOKEN = useSelector((state) => state.user.value.token);
   const favorites = useSelector((state) => state.user.favorites);
   const [tripsLiked, setTripsLiked] = useState([]);
@@ -21,6 +20,7 @@ export default function MyTrips({ navigation }) {
     fetch(`${serverURL}/users/like/${TOKEN}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.result) {
           console.log('fetch of liked trips successful on MyTrips');
           setTripsLiked(data.tripsLiked);
@@ -49,12 +49,10 @@ export default function MyTrips({ navigation }) {
           console.log('Fetch of booked trips failed on MyTrips.');
         }
       });
-  }, []);
+  }, [favorites]);
 
-  let likedTrips = (
-    <Text style={{ fontFamily: 'txt' }}>No liked trip yet. Book one now! </Text>
-  );
-  if (tripsLiked) {
+  let likedTrips = <Text style={{ fontFamily: 'txt' }}>No trips liked yet.</Text>;
+  if (tripsLiked && tripsLiked.length > 0) {
     likedTrips = tripsLiked.map((data, i) => {
       const isFavorite = favorites.some((favorite) => favorite.id === data.id);
       return (

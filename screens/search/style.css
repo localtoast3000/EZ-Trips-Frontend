@@ -1,31 +1,29 @@
-/*--------------------------------------------- PAGE -----------------------------------------*/
-
-.container {
-  padding: 15px;
+.mainContainer {
   flex: 1;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-around;
+  padding: 40px 15px 0 15px;
 }
 
 .header {
-  margin-top: 35px;
-  margin-bottom: 10px;
-  width: 100%;
-  height: 30%;
-  flex: 1;
-  flex-direction: column;
-}
-
-.title {
   font-family: 'heading';
-  font-size: 3rem;
-  margin-bottom: 10px;
+  font-size: 50px;
 }
 
-.searchContainer {
+.searchBarContainer {
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+  border-bottom-width: 2px;
+}
+.searchInput {
+  margin-right: auto;
+  height: 50px;
+  font-family: 'txt';
+}
+.resultsCounterAndFilterIconContainer {
   flex-direction: row;
   justify-content: space-between;
+  padding: 20px 10px;
 }
 
 .text {
@@ -38,10 +36,6 @@
   width: 100%;
   height: 1px;
   align-self: center;
-}
-.catalogue {
-  flex: 1;
-  margin-top: 30px;
 }
 
 .tripCardContainer {
