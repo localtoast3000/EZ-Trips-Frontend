@@ -9,6 +9,8 @@ export default class LightTheme {
   theme = {
     pa1: '#C46B4D',
     pa2: '#177861',
+    pa3: '#8bc4b7',
+    pa4: '#F29A86',
     pa1C: '#ffffff',
     pa2C: '#ffffff',
 

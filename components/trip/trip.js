@@ -15,6 +15,7 @@ export default function Trip({
   titleStyles,
   dateStyles,
   priceStyles,
+  onPress = () => null,
   ...props
 }) {
   //constantes générales
@@ -91,7 +92,13 @@ export default function Trip({
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => handleNavigation()}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        handleNavigation();
+        onPress();
+      }}
+    >
       <ImageBackground
         imageStyle={{ borderRadius: 15 }}
         source={{ uri: props.background }}

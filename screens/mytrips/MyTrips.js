@@ -1,27 +1,23 @@
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
 import { loadFonts } from '../../assets/fonts/fonts';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
-import TripPlaned from '../../components/icons/tripplaned';
+import Plane from '../../components/icons/Plane';
 import HorizontalScrollView from '../../components/horzontal_scroll_view/HorizontalScrollView';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import HeartIcon from '../../components/icons/HeartIcon';
 import Trip from '../../components/trip/trip';
 import styles from './style.css';
 import { serverURL } from '../../api/backend_request';
 import { useSelector } from 'react-redux';
 
 export default function MyTrips({ navigation }) {
-  //constantes générales
   const tripLiked = useSelector((state) => state.user.favorites);
   const TOKEN = useSelector((state) => state.user.value.token);
   const favorites = useSelector((state) => state.user.favorites);
-
-  //store les trips à display (liked + booked)
   const [tripsLiked, setTripsLiked] = useState([]);
   const [tripsBooked, setTripsBooked] = useState([]);
 
   useEffect(() => {
-    //GET THE TRIPS LIKED BY THE USER
     fetch(`${serverURL}/users/like/${TOKEN}`)
       .then((response) => response.json())
       .then((data) => {
@@ -55,8 +51,6 @@ export default function MyTrips({ navigation }) {
       });
   }, []);
 
-  //---------------- MAP LIKED TRIPS  ----------------
-
   let likedTrips = (
     <Text style={{ fontFamily: 'txt' }}>No liked trip yet. Book one now! </Text>
   );
@@ -81,9 +75,6 @@ export default function MyTrips({ navigation }) {
     });
   }
 
-  // ---------------- MAP PLANED TRIPS ----------------
-
-  //if tripsBooked is empty, just show a default Text div.
   let planedTrips = (
     <Text style={{ fontFamily: 'txt' }}>No planned trip yet. Book one now! </Text>
   );
@@ -113,7 +104,6 @@ export default function MyTrips({ navigation }) {
     });
   }
 
-  //*FONT CODE
   const loadedFonts = loadFonts();
   if (!loadedFonts) return <></>;
 
@@ -123,10 +113,14 @@ export default function MyTrips({ navigation }) {
         <Text style={styles.header}>My trips</Text>
         <TripScroller
           title='Liked trips'
-          icon={<AntDesign name='heart' size={23} color={'black'} />}
+          icon={<HeartIcon scale={0.35} color='black' stroke={4} />}
           trips={likedTrips}
         />
-        <TripScroller title='Planned Trips' icon={<TripPlaned />} trips={planedTrips} />
+        <TripScroller
+          title='Planned Trips'
+          icon={<Plane scale={1.7} color='black' stroke={0.8} />}
+          trips={planedTrips}
+        />
         <ViewDocumentsBtn onPress={() => navigation.navigate('MyDocuments')} />
       </View>
       <BottomToolbar />

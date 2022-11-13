@@ -1,141 +1,167 @@
-
 /*--------------------------------------------- PAGE -----------------------------------------*/
 
-
 .container {
-    padding: 25px;
-    flex: 1;
-    height: 100%;
-    flex-direction: column; 
-    justify-content: space-around;
+  padding: 15px;
+  flex: 1;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .header {
-    margin-top: 35px;
-    margin-bottom: 10px;
-    width: 100%;
-    height: 30%;
-    flex: 1;
-    flex-direction: column;
+  margin-top: 35px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 30%;
+  flex: 1;
+  flex-direction: column;
 }
 
 .title {
-    font-family: 'heading';
-    font-size: 3rem;
-    margin-bottom: 10px;
+  font-family: 'heading';
+  font-size: 3rem;
+  margin-bottom: 10px;
 }
 
 .searchContainer {
-    flex-direction: row;
-    justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .text {
-    font-family: 'txt';
+  font-family: 'txt';
 }
 
 .border {
-    border-bottom-color: black;
-    border-bottom-width: 2px;
-    width: 100%;
-    height: 1px;
-    align-self: center;
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  width: 100%;
+  height: 1px;
+  align-self: center;
 }
 .catalogue {
-    flex: 1;
-    margin-top: 30px;
+  flex: 1;
+  margin-top: 30px;
+}
+
+.tripCardContainer {
+  margin-right: 20px;
+  width: 100%;
+  height: 230px;
+  margin-bottom: 15px;
+}
+.tripCardheart {
+  padding: 20px;
+}
+.tripCardCountry {
+  padding: 20px;
+}
+.tripCardTitle {
+  justify-self: flex-start;
+  font-size: 27px;
+  max-width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.tripCardDate {
+  max-width: 150px;
+  font-size: 16px;
+  padding: 0 0 20px 20px;
+}
+.tripCardPrice {
+  font-size: 16px;
+  padding: 0 20px 20px 0;
 }
 
 /*--------------------------------------------- MODAL -----------------------------------------*/
 
-
 .modal {
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    position: absolute;
-    top: 18%;
-    padding: 20px;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  top: 18%;
+  padding: 20px;
 }
 
 .filterText {
-    font-family: 'txt';
-    font-size: 18px;
-    margin-bottom: 5;
+  font-family: 'txt';
+  font-size: 18px;
+  margin-bottom: 5;
 }
 
 /*--------------- BUTTONS -------------*/
 
 .button {
-    height: 20px;
-    width: 20px;
-    border-radius: 3px;
-    border-color: black;
-    border-width: 1px;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  border-color: black;
+  border-width: 1px;
 }
 
 .btnSearch {
-    align-self: center;
-    margin-top: 100;
-    width: 50%;
-    height: 30;
-    border-radius: 3px;
-    border-color: black;
-    border-width: 1px;
-    align-items: center;
-    border-radius: 10px;
-    justify-content: center;
+  align-self: center;
+  margin-top: 100;
+  width: 50%;
+  height: 30;
+  border-radius: 3px;
+  border-color: black;
+  border-width: 1px;
+  align-items: center;
+  border-radius: 10px;
+  justify-content: center;
 }
 /*--------------------- CALENDAR SECTION ---------------------*/
 .calendar {
-    width: 100%;
-    height: 100%;
-    flex: 1;
-    margin: 30px;
-    align-self: center;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  margin: 30px;
+  align-self: center;
 }
 
 .smallCalendar {
-    flex: 1;
-    height: 50;
-    margin-bottom: 30;
+  flex: 1;
+  height: 50;
+  margin-bottom: 30;
 }
 
 .bigCalendar {
-    height: 430;
-    flex: 1;
-    flex-direction: column;
-    font-family: 'txt';
-    font-size: 18px;
+  height: 430;
+  flex: 1;
+  flex-direction: column;
+  font-family: 'txt';
+  font-size: 18px;
 }
 
 /*--------------------- TAG SECTION---------------------*/
 
 .bigTagSection {
-    flex: 1;
-    margin-top: 30;
-    height: 300;
-    width: 100%;
+  flex: 1;
+  margin-top: 30;
+  height: 300;
+  width: 100%;
 }
 
 .smallTagSection {
-    flex: 1;
-    margin-top: 30;
-    width: 100%;
+  flex: 1;
+  margin-top: 30;
+  width: 100%;
 }
 
 .tags {
-    padding-top: 5;
-    padding-right: 8;
-    padding-bottom: 5;
-    padding-left: 8;
-    margin-right: 12;
-    margin-top: 5;
-    border-radius: 15px;
-    border: 1px solid black;
-  }
+  padding-top: 5;
+  padding-right: 8;
+  padding-bottom: 5;
+  padding-left: 8;
+  margin-right: 12;
+  margin-top: 5;
+  border-radius: 15px;
+  border: 1px solid black;
+}
 
-  .tagsContainer {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
+.tagsContainer {
+  flex-direction: row;
+  flex-wrap: wrap;
+}

@@ -57,8 +57,8 @@ export default function MyQuotations() {
       let end = data.end.slice(5, 10);
 
       return (
-        <>
-          <QuotationStatusMsg status='requested' travelerQty={data.nbTravellers} />
+        <View key={i} style={styles.tripQuoteStatusContainer}>
+          <QuotationStatusMsg status='requested' travelerQty={10} />
           <Trip
             containerStyles={styles.tripCardContainer}
             topElementsContainerStyles={styles.tripCardTopElementsContainer}
@@ -75,7 +75,7 @@ export default function MyQuotations() {
             start={start}
             end={end}
           ></Trip>
-        </>
+        </View>
       );
     });
   }
@@ -120,13 +120,13 @@ export default function MyQuotations() {
         <Text style={styles.header}>My quotations</Text>
         <TripScroller
           title='Request sent'
-          icon={<Ionicons name='send-outline' size={30} color={'black'} />}
+          icon={<Ionicons name='send-outline' size={22} color={'black'} />}
           trips={sentDisplay}
         />
         <TripScroller
           title='Quotation received'
-          icon={<Ionicons name='mail-unread-outline' size={30} color={'black'} />}
-          trips={quotationDisplay}
+          icon={<Ionicons name='mail-unread-outline' size={24} color={'black'} />}
+          trips={sentDisplay}
         />
         <View style={{ height: 100 }}></View>
       </View>
@@ -138,12 +138,13 @@ export default function MyQuotations() {
 function QuotationStatusMsg({ status, travelerQty }) {
   return (
     <View style={styles.quotationStatusMsgContainer}>
-      <Text style={styles.quoteMsgPartOne}>
-        Quotation {status === 'requested' ? 'asked' : 'recived'} for{' '}
-        <Text style={styles.numberOfPeople}>{travelerQty} persons</Text>.
-      </Text>
-      <Text style={styles.quoteStatus}>
-        {status === 'requested' ? 'Wating on quotation response' : 'Quotation recived'}
+      <Text style={{ ...styles.quoteStatus, color: 'white' }}>
+        {status === 'requested'
+          ? 'Pending quotation request for '
+          : 'Quotation recived for'}
+        <Text style={styles.numberOfPeople}>
+          {travelerQty} {travelerQty === 1 ? 'person' : 'people'}
+        </Text>
       </Text>
     </View>
   );
@@ -151,10 +152,10 @@ function QuotationStatusMsg({ status, travelerQty }) {
 
 function TripScroller({ icon, title, trips }) {
   return (
-    <>
+    <View style={styles.tripsHeaderAndScrollerContainer}>
       <TripsHeader icon={icon} title={title} />
       <HorizontalScrollView style={styles.scrollContainer}>{trips}</HorizontalScrollView>
-    </>
+    </View>
   );
 }
 

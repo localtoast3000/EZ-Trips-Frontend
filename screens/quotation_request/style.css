@@ -2,7 +2,34 @@
   flex: 1;
   padding: 20px;
 }
-
+.tripCardContainer {
+  margin-right: 20px;
+  width: 100%;
+  height: 230px;
+  margin-bottom: 15px;
+}
+.tripCardheart {
+  padding: 20px;
+}
+.tripCardCountry {
+  padding: 20px;
+}
+.tripCardTitle {
+  justify-self: flex-start;
+  font-size: 27px;
+  max-width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.tripCardDate {
+  max-width: 150px;
+  font-size: 16px;
+  padding: 0 0 20px 20px;
+}
+.tripCardPrice {
+  font-size: 16px;
+  padding: 0 20px 20px 0;
+}
 .calendarContainer {
   padding-bottom: 20px;
 }
@@ -65,10 +92,10 @@
 .modal {
   padding-top: 10;
   padding-bottom: 10;
- flex-direction: row;
- flex-wrap: wrap;
- width: 400;
- align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 400;
+  align-items: center;
 }
 .modalText {
   font-family: 'txt';

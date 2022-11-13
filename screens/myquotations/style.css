@@ -1,6 +1,6 @@
 .mainContainer {
   flex: 1;
-  padding: 45px 0 70px 15px;
+  padding: 45px 0 0 15px;
 }
 .header {
   font-family: 'heading';
@@ -23,29 +23,57 @@
 
 .smallTitle {
   font-family: 'txt';
-  font-size: 20;
-  margin-bottom: 5;
+  font-size: 16px;
   margin-left: 12;
+}
+.tripsHeaderAndScrollerContainer {
+  flex: 1;
 }
 .scrollContainer {
   width: 100%;
-  height: 400px;
+}
+.tripQuoteStatusContainer {
+  flex-direction: column;
 }
 
 .tripCardContainer {
+  justify-content: flex-end;
   margin-right: 15px;
   width: 250px;
   height: 100%;
 }
+.quotationStatusMsgContainer {
+  position: absolute;
+  align-items: center;
+  z-index: 3;
+  width: 250px;
+  background-color: black;
+  right: 15px;
+  border-radius: 15px 15px 0 0;
+  padding: 5px;
+}
+
+.quoteStatus {
+  font-family: 'txtExtraLight';
+  font-size: 12px;
+  max-width: 180;
+}
+
+.numberOfPeople {
+  color: #f9f4b3;
+}
 .tripCardheart {
-  padding: 15px;
+  font-size: 0;
+}
+.tripCardTopElementsContainer {
+  margin-top: auto;
 }
 .tripCardCountry {
-  padding: 15px;
+  padding: 15px 0 5px 15px;
+  font-size: 12px;
 }
 .tripCardTitle {
-  justify-self: flex-start;
-  font-size: 19px;
+  font-size: 20px;
   max-width: 100%;
   margin-left: 15px;
   margin-right: 15px;

@@ -1,21 +1,8 @@
-import {
-  Button,
-  TextInput,
-  Modal,
-  ScrollView,
-  SafeAreaView,
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Dimensions,
-} from 'react-native';
+import { TextInput, Modal, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import styles from './style.css';
 import { serverURL } from '../../api/backend_request';
-import { useTheme } from '@react-navigation/native';
 import { loadFonts } from '../../assets/fonts/fonts';
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Trip from '../../components/trip/trip';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import DateRangePicker from 'rnv-date-range-picker';
@@ -23,34 +10,25 @@ import moment from 'moment';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { RangeSlider } from '@sharcoux/slider';
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 
 export default function Search({ navigation }) {
-
-  ///////////////////////////////////////////////////////////REACT STATES////////////////////////////////////////////////////////////
-
-  //tous les trips récupérés par la route GET au chargement
   const [tripsData, setTripsData] = useState([]);
-  //fait apparaître / disparaître la Modal Filtres
   const [modalVisible, setModalVisible] = useState(false);
-  //input Text haut de page
   const [searchInput, setSearchInput] = useState('');
-  //Tous les inputs de la Modal filtres
   const [minBudget, setMinBudget] = useState(0);
   const [maxBudget, setMaxBudget] = useState(8000);
   const [nbTravelers, setnbTravelers] = useState(1);
   const [calendarVisible, setCalendarVisible] = useState(false);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [dropdownTagVisible, setDropdownTagVisible] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
-  const searchRef = useRef(null)
   const [allTags, setAllTags] = useState([]);
 
   //redux store pour récupérer les favoris et gérer la couleur du coeur
   const favorites = useSelector((state) => state.user.favorites);
-  
+
   //GET ALL THE TRIPS WHEN LOADING THE SCREEN
   useEffect(() => {
     fetch(`${serverURL}/trips`)
@@ -59,44 +37,52 @@ export default function Search({ navigation }) {
         setTripsData(data.trips);
         const tripData = [];
         //add the tags to the hook allTags
-        data.trips.map (trip => {
-          trip.tags.map(tag => {
-            if (!tripData.find(e => e===tag)){
-              tripData.push(tag)
+        data.trips.map((trip) => {
+          trip.tags.map((tag) => {
+            if (!tripData.find((e) => e === tag)) {
+              tripData.push(tag);
             }
-          })
-        })
+          });
+        });
         setAllTags(tripData);
-      })
-      ;
+      });
   }, []);
 
   //S'assure que la police est bien chargée
   const loadedFonts = loadFonts();
   if (!loadedFonts) return <></>;
 
-    //variable déclarée, mais assignée que si tripsData est bien récupéré du back pour éviter les bugs
-    let trips;
-    //MAP TO DISPLAY ALL THE TRIPS
-    if (tripsData) {
-      trips = tripsData.map((data, i) => {
-        return (
-          <View key={i} style={{ height: 180 }}>
-          <Trip id={data._id} propsKey={i} {...data} isFavorite={favorites.some((favorite) => favorite === data._id)} />
-          </View>
-        );
-      });
-    }
+  //variable déclarée, mais assignée que si tripsData est bien récupéré du back pour éviter les bugs
+  let trips;
+  //MAP TO DISPLAY ALL THE TRIPS
+  if (tripsData) {
+    trips = tripsData.map((data, i) => {
+      return (
+        <Trip
+          key={i}
+          containerStyles={styles.tripCardContainer}
+          topElementsContainerStyles={styles.tripCardTopElementsContainer}
+          countryStyles={styles.tripCardCountry}
+          heartStyles={styles.tripCardheart}
+          titleStyles={styles.tripCardTitle}
+          dateStyles={styles.tripCardDate}
+          priceStyles={styles.tripCardPrice}
+          id={data._id}
+          propsKey={i}
+          {...data}
+          isFavorite={favorites.some((favorite) => favorite === data._id)}
+        />
+      );
+    });
+  }
 
   ////////////////////////////////////////////////////////////////SEARCH RESULTS - FUNCTIONS////////////////////////////////////////////////////////////
-  
 
   //HANDLE SEARCH WHEN BUTTON IS CLICKED
 
   const handleSearch = () => {
-
-    const startMonth = startDate.slice(3, 5)
-    const endMonth = endDate.slice(3, 5)
+    const startMonth = startDate.slice(3, 5);
+    const endMonth = endDate.slice(3, 5);
 
     //construit un objet regroupant tous les paramètres de filtres
     let research = { minBudget, maxBudget, searchInput, startMonth, endMonth };
@@ -104,7 +90,7 @@ export default function Search({ navigation }) {
     //construit l'URL avec les query correspondants aux filtres
     var url = new URL(`${serverURL}/trips/filter`);
     Object.keys(research).forEach((key) => url.searchParams.append(key, research[key]));
-  
+
     //fetch avec l'URL personnalisé à la recherche
     fetch(url)
       .then((response) => response.json())
@@ -127,57 +113,65 @@ export default function Search({ navigation }) {
 
   //fonction pour ajouter le tag sélectionné au tableau SelectedTags
   const addTag = (item) => {
-   if (item) {
-    if (!selectedTags.some(e => e.id==item.id)) {
-      setSelectedTags([...selectedTags, item])
+    if (item) {
+      if (!selectedTags.some((e) => e.id == item.id)) {
+        setSelectedTags([...selectedTags, item]);
+      } else {
+        // setSelectedTags(selectedTags.filter(e => e.title == tag.title))
+      }
+    } else {
+      console.log('no tag selected');
+      return;
     }
-    else {
-      // setSelectedTags(selectedTags.filter(e => e.title == tag.title))
-    }
-   }
-   else {
-    console.log('no tag selected');
-    return;
-   }
-  }
+  };
 
-  //dataset displayed dans le tag dropdown menu. Attribue un ID à chacun des tags => source à partir de laquelle on travaille pour la suite. 
-  let dataset = []
+  //dataset displayed dans le tag dropdown menu. Attribue un ID à chacun des tags => source à partir de laquelle on travaille pour la suite.
+  let dataset = [];
   if (allTags.length != 0) {
-    allTags.map((tag,i) => dataset.push({id:i+1, title: tag }))
+    allTags.map((tag, i) => dataset.push({ id: i + 1, title: tag }));
   }
 
   //display les boutons tags : cinq "tags populaires" (les 5 premiers du dataset) puis les tags de SelectedTags
   const allTagsDisplay = dataset.map((e, i) => {
     //Gère la couleur du bouton tag en fonction de s'il est sélectionné ou non
-    const selected = selectedTags ? selectedTags.some(tag => tag.id === e.id) : false;
+    const selected = selectedTags ? selectedTags.some((tag) => tag.id === e.id) : false;
     //affiche les tags populaires
-    if (i<6) {
+    if (i < 6) {
       return (
         <TouchableOpacity
           onPress={() => addTag(e)}
           //la couleur du bouton dépend de si le tag est sélectionné ou pas dans SelectedTags
-          style={selected ? {...styles.tags, backgroundColor: '#C46B4D'} : {...styles.tags, backgroundColor: 'white'}}
-          key={i}>
+          style={
+            selected
+              ? { ...styles.tags, backgroundColor: '#C46B4D' }
+              : { ...styles.tags, backgroundColor: 'white' }
+          }
+          key={i}
+        >
           <Text>{e.title}</Text>
         </TouchableOpacity>
-      )}
+      );
+    }
     //affiche les tags sélectionnés
     else {
-      if (selectedTags.some(tag => tag.id === e.id)) {
+      if (selectedTags.some((tag) => tag.id === e.id)) {
         return (
           <TouchableOpacity
-          onPress={() => addTag(e)}
-          //la couleur du bouton dépend de si le tag est sélectionné ou pas dans SelectedTags
-          style={selected ? {...styles.tags, backgroundColor: '#C46B4D'} : {...styles.tags, backgroundColor: 'white'}}
-          key={i}>
-          <Text>{e.title}</Text>
-        </TouchableOpacity>
-        )
+            onPress={() => addTag(e)}
+            //la couleur du bouton dépend de si le tag est sélectionné ou pas dans SelectedTags
+            style={
+              selected
+                ? { ...styles.tags, backgroundColor: '#C46B4D' }
+                : { ...styles.tags, backgroundColor: 'white' }
+            }
+            key={i}
+          >
+            <Text>{e.title}</Text>
+          </TouchableOpacity>
+        );
       }
     }
-  })
-
+  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -188,9 +182,10 @@ export default function Search({ navigation }) {
               <Text style={styles.title}>Search</Text>
               <View style={styles.searchContainer}>
                 <TextInput
-                value={searchInput} 
-                placeholder='Where are you heading?' 
-                onChange={(e) => setSearchInput(e.target.value)}></TextInput>
+                  value={searchInput}
+                  placeholder='Where are you heading?'
+                  onChange={(e) => setSearchInput(e.target.value)}
+                ></TextInput>
                 <AntDesign name='search1' size={20} color='black' />
               </View>
             </View>
@@ -199,7 +194,12 @@ export default function Search({ navigation }) {
           <View style={styles.catalogue}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.text}>{tripsData ? tripsData.length : 0} results</Text>
-              <AntDesign name='filter' size={20} color='black' onPress={() => setModalVisible(!modalVisible)} />
+              <AntDesign
+                name='filter'
+                size={20}
+                color='black'
+                onPress={() => setModalVisible(!modalVisible)}
+              />
             </View>
             <View style={styles.tripContainer}>{tripsData ? trips : <View></View>}</View>
             <Modal
@@ -208,20 +208,46 @@ export default function Search({ navigation }) {
               visible={modalVisible}
               onRequestClose={() => {
                 setModalVisible(!modalVisible);
-              }}>
+              }}
+            >
               <View style={styles.modal}>
                 <View
                   id='headerFilter'
-                  style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <Text style={{ fontFamily: 'txt', fontSize: 24 }}>Filters</Text>
-                  <AntDesign name='close' size={30} color='black' onPress={() => setModalVisible(!modalVisible)} />
+                  <AntDesign
+                    name='close'
+                    size={30}
+                    color='black'
+                    onPress={() => setModalVisible(!modalVisible)}
+                  />
                 </View>
 
-                <ScrollView id="ScrollviewFilters" style={{padding: 5, backgroundColor: '#F2F3F5', marginTop: 10, padding: 25, height: '100%'}}>
-                  
+                <ScrollView
+                  id='ScrollviewFilters'
+                  style={{
+                    padding: 5,
+                    backgroundColor: '#F2F3F5',
+                    marginTop: 10,
+                    padding: 25,
+                    height: '100%',
+                  }}
+                >
                   <View name='sectionBudget'>
                     <Text style={styles.filterText}>Budget</Text>
-                    <View name='sectionContent' style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
+                    <View
+                      name='sectionContent'
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        padding: 5,
+                      }}
+                    >
                       <View name='field'>
                         <Text>Min</Text>
                         <TextInput placeholder='0'>{minBudget}</TextInput>
@@ -232,7 +258,7 @@ export default function Search({ navigation }) {
                       </View>
                     </View>
 
-                    <View name=""style={{padding: 9}}>
+                    <View name='' style={{ padding: 9 }}>
                       <RangeSlider
                         range={[0, 8000]} // set the current slider's value
                         minimumValue={0} // Minimum value
@@ -262,70 +288,124 @@ export default function Search({ navigation }) {
                     </View>
                   </View>
 
-                <View
-                  name='travelersSection'
-                  style={{
-                    marginTop: 30,
-                    marginBottom: 30,
-                    height: 50,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.filterText}>Number of travelers</Text>
                   <View
+                    name='travelersSection'
                     style={{
+                      marginTop: 30,
+                      marginBottom: 30,
+                      height: 50,
+                      flexDirection: 'row',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      flexDirection: 'row',
-                      width: '20%',
-                    }}>
-                    <TouchableOpacity style={styles.button} title='Decrement' onPress={() => decrement()}>
-                      <Text style={{ textAlign: 'center', color: 'black' }}>-</Text>
-                    </TouchableOpacity>
-                    <Text>{nbTravelers}</Text>
-                    <TouchableOpacity style={styles.button} title='Increment' onPress={() => increment()}>
-                      <Text style={{ textAlign: 'center', color: 'black' }}>+</Text>
-                    </TouchableOpacity>
+                    }}
+                  >
+                    <Text style={styles.filterText}>Number of travelers</Text>
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        flexDirection: 'row',
+                        width: '20%',
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={styles.button}
+                        title='Decrement'
+                        onPress={() => decrement()}
+                      >
+                        <Text style={{ textAlign: 'center', color: 'black' }}>-</Text>
+                      </TouchableOpacity>
+                      <Text>{nbTravelers}</Text>
+                      <TouchableOpacity
+                        style={styles.button}
+                        title='Increment'
+                        onPress={() => increment()}
+                      >
+                        <Text style={{ textAlign: 'center', color: 'black' }}>+</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
 
-                <View name='calendarSection' style={calendarVisible ? styles.bigCalendar : styles.smallCalendar}>
-                  <Text style={styles.filterText}>Departure dates</Text>
+                  <View
+                    name='calendarSection'
+                    style={calendarVisible ? styles.bigCalendar : styles.smallCalendar}
+                  >
+                    <Text style={styles.filterText}>Departure dates</Text>
 
-                  <View name="dateInput" style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, width: '90%'}}>
-                    <Text style={{fontFamily: 'txt'}}>Start:</Text><TouchableOpacity style={{width: '30%', height: '100%', borderBottomColor: 'black', borderBottomWidth: 0.5}} onPress={() => setCalendarVisible(!calendarVisible)}><Text>{startDate}</Text></TouchableOpacity>
-                    <Text style={{fontFamily: 'txt'}}>End:</Text><TouchableOpacity style={{width: '30%', height: '100%', borderBottomColor: 'black', borderBottomWidth: 0.5}} onPress={() => setCalendarVisible(!calendarVisible)}><Text>{endDate}</Text></TouchableOpacity>
-                  </View>
+                    <View
+                      name='dateInput'
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: 10,
+                        width: '90%',
+                      }}
+                    >
+                      <Text style={{ fontFamily: 'txt' }}>Start:</Text>
+                      <TouchableOpacity
+                        style={{
+                          width: '30%',
+                          height: '100%',
+                          borderBottomColor: 'black',
+                          borderBottomWidth: 0.5,
+                        }}
+                        onPress={() => setCalendarVisible(!calendarVisible)}
+                      >
+                        <Text>{startDate}</Text>
+                      </TouchableOpacity>
+                      <Text style={{ fontFamily: 'txt' }}>End:</Text>
+                      <TouchableOpacity
+                        style={{
+                          width: '30%',
+                          height: '100%',
+                          borderBottomColor: 'black',
+                          borderBottomWidth: 0.5,
+                        }}
+                        onPress={() => setCalendarVisible(!calendarVisible)}
+                      >
+                        <Text>{endDate}</Text>
+                      </TouchableOpacity>
+                    </View>
 
-                 
                     {calendarVisible ? (
-                    <View style={styles.calendar}>
-                      <DateRangePicker
-                    onSelectDateRange={(range) => {
-                    setStartDate(range.firstDate)
-                    setEndDate(range.secondDate)
-                    setCalendarVisible(false)
-                  }}
-                    backgroundColor="white"
-                    responseFormat='DD-MM-YYYY'
-                    maxDate={moment().add(3, 'years')}
-                    minDate={moment()}
-                />
-                </View>): false}
-                </View>
+                      <View style={styles.calendar}>
+                        <DateRangePicker
+                          onSelectDateRange={(range) => {
+                            setStartDate(range.firstDate);
+                            setEndDate(range.secondDate);
+                            setCalendarVisible(false);
+                          }}
+                          backgroundColor='white'
+                          responseFormat='DD-MM-YYYY'
+                          maxDate={moment().add(3, 'years')}
+                          minDate={moment()}
+                        />
+                      </View>
+                    ) : (
+                      false
+                    )}
+                  </View>
 
-                <View name='tagsSection' style= {dropdownTagVisible ? styles.bigTagSection : styles.smallTagSection}>
-                  <Text style={styles.filterText}>What are you looking for?</Text>
-                  <AutocompleteDropdown
+                  <View
+                    name='tagsSection'
+                    style={
+                      dropdownTagVisible ? styles.bigTagSection : styles.smallTagSection
+                    }
+                  >
+                    <Text style={styles.filterText}>What are you looking for?</Text>
+                    <AutocompleteDropdown
                       clearOnFocus={true}
                       closeOnBlur={true}
-                      onBlur={() => {setDropdownTagVisible(false)}}
-                      onChevronPress={() => {setDropdownTagVisible(!dropdownTagVisible)}}
+                      onBlur={() => {
+                        setDropdownTagVisible(false);
+                      }}
+                      onChevronPress={() => {
+                        setDropdownTagVisible(!dropdownTagVisible);
+                      }}
                       closeOnSubmit={true}
                       initialValue={''}
-                      onSelectItem={item => {
-                        item && addTag(item)
+                      onSelectItem={(item) => {
+                        item && addTag(item);
                       }}
                       dataSet={dataset}
                       direction={Platform.select({ ios: 'down', android: 'down' })}
@@ -339,18 +419,20 @@ export default function Search({ navigation }) {
                         },
                       }}
                     />
-                    <Text style={{fontFamily:'txt', fontSize: 12, marginTop: 10}}>popular tags:</Text>
+                    <Text style={{ fontFamily: 'txt', fontSize: 12, marginTop: 10 }}>
+                      popular tags:
+                    </Text>
                     <View style={styles.tagsContainer}>{allTagsDisplay}</View>
+                  </View>
 
-                </View>
-
-                <TouchableOpacity
-                  style={styles.btnSearch}
-                  onPress={() => handleSearch(minBudget, maxBudget, nbTravelers)}>
-                  <Text style={styles.text}>Search results</Text>
-                </TouchableOpacity>
-                <View style={{ height: 400 }}></View>
-              </ScrollView>
+                  <TouchableOpacity
+                    style={styles.btnSearch}
+                    onPress={() => handleSearch(minBudget, maxBudget, nbTravelers)}
+                  >
+                    <Text style={styles.text}>Search results</Text>
+                  </TouchableOpacity>
+                  <View style={{ height: 400 }}></View>
+                </ScrollView>
               </View>
             </Modal>
           </View>
