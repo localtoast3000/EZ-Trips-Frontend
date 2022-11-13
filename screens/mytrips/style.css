@@ -1,8 +1,11 @@
-.container {
+.mainContainer {
   flex: 1;
   padding: 45px 0 70px 15px;
 }
-
+.header {
+  font-family: 'heading';
+  font-size: 50px;
+}
 .border {
   border-bottom-color: black;
   border-bottom-width: 2px;
@@ -10,71 +13,49 @@
   height: 1px;
   margin-left: 5;
 }
-.header {
-  font-family: 'heading';
-  font-size: 50px;
-}
-.titleCard {
-  font-family: 'heading';
-  font-size: 1.5rem;
-  color: white;
+.sousHeaderContainer {
+  margin-bottom: 10px;
 }
 .sousHeader {
   flex-direction: row;
   margin: 15px 0px 5px 12px;
 }
-.bottomInfo {
-  flex-direction: column;
-  justify-content: flex-end;
-}
 .smallTitle {
   font-family: 'txt';
-  font-size: 20;
+  font-size: 20px;
   margin-bottom: 5;
   margin-left: 12;
 }
-.pdfContainer {
-  align-items: center;
-  justify-content: center;
-  border-radius: 35px;
-  margin-left: 12;
+.scrollContainer {
+  width: 100%;
+  height: 300px;
 }
-
-.topInfos {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.tripContainer {
+.tripCardContainer {
   margin-right: 15px;
-  width: 250;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 35px;
+  width: 250px;
+  height: 100%;
 }
-
-.galleryContainer {
-  height: 100px;
-  flex-direction: row;
+.tripCardheart {
+  padding: 15px;
 }
-
-.addContainer {
-  flex-direction: row;
-  justify-content: flex-end;
+.tripCardCountry {
+  padding: 15px;
 }
-.addText {
-  font-family: 'txtLight';
-  font-size: 15;
+.tripCardTitle {
+  justify-self: flex-start;
+  font-size: 19px;
+  max-width: 100%;
+  margin-left: 15px;
+  margin-right: 15px;
 }
-.addButtonText {
-  background-color: #c46b4d;
-  font-family: 'txt';
-  font-size: 17;
-  padding-right: 5;
-  padding-left: 5;
-  border-radius: 5px;
-  margin-left: 5;
-  color: white;
+.tripCardDate {
+  max-width: 100px;
+  font-size: 12px;
+  padding: 0 0 15px 15px;
+}
+.tripCardPrice {
+  font-size: 12px;
+  padding: 0 15px 15px 0;
 }
 
 .documentBtn {

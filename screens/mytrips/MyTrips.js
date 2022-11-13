@@ -64,15 +64,19 @@ export default function MyTrips({ navigation }) {
     likedTrips = tripsLiked.map((data, i) => {
       const isFavorite = favorites.some((favorite) => favorite.id === data.id);
       return (
-        <View key={i} style={styles.tripContainer}>
-          <Trip
-            titleStyles={styles.tripCardTitle}
-            dateStyles={styles.tripCardDate}
-            {...data}
-            id={data._id}
-            isFavorite={isFavorite}
-          ></Trip>
-        </View>
+        <Trip
+          key={i}
+          containerStyles={styles.tripCardContainer}
+          topElementsContainerStyles={styles.tripCardTopElementsContainer}
+          countryStyles={styles.tripCardCountry}
+          heartStyles={styles.tripCardheart}
+          titleStyles={styles.tripCardTitle}
+          dateStyles={styles.tripCardDate}
+          priceStyles={styles.tripCardPrice}
+          {...data}
+          id={data._id}
+          isFavorite={isFavorite}
+        ></Trip>
       );
     });
   }
@@ -88,17 +92,23 @@ export default function MyTrips({ navigation }) {
       let start = data.start.slice(5, 10);
       let end = data.end.slice(5, 10);
       return (
-        <View key={i} style={styles.tripContainer}>
-          <Trip
-            id={data._id}
-            price={data.totalPrice}
-            country={data.trip.country}
-            background={data.trip.background}
-            name={data.trip.name}
-            start={start}
-            end={end}
-          ></Trip>
-        </View>
+        <Trip
+          key={i}
+          containerStyles={styles.tripCardContainer}
+          topElementsContainerStyles={styles.tripCardTopElementsContainer}
+          countryStyles={styles.tripCardCountry}
+          heartStyles={styles.tripCardheart}
+          titleStyles={styles.tripCardTitle}
+          dateStyles={styles.tripCardDate}
+          priceStyles={styles.tripCardPrice}
+          id={data._id}
+          price={data.totalPrice}
+          country={data.trip.country}
+          background={data.trip.background}
+          name={data.trip.name}
+          start={start}
+          end={end}
+        ></Trip>
       );
     });
   }
@@ -109,14 +119,14 @@ export default function MyTrips({ navigation }) {
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={styles.mainContainer}>
         <Text style={styles.header}>My trips</Text>
         <TripScroller
           title='Liked trips'
           icon={<AntDesign name='heart' size={23} color={'black'} />}
           trips={likedTrips}
         />
-        <TripScroller title='Planned Trips' icon={<TripPlaned />} trips={likedTrips} />
+        <TripScroller title='Planned Trips' icon={<TripPlaned />} trips={planedTrips} />
         <ViewDocumentsBtn onPress={() => navigation.navigate('MyDocuments')} />
       </View>
       <BottomToolbar />
@@ -128,7 +138,7 @@ function TripScroller({ icon, title, trips }) {
   return (
     <>
       <TripsHeader icon={icon} title={title} />
-      <HorizontalScrollView style={styles.galleryContainer}>{trips}</HorizontalScrollView>
+      <HorizontalScrollView style={styles.scrollContainer}>{trips}</HorizontalScrollView>
     </>
   );
 }

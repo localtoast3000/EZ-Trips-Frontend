@@ -1,91 +1,61 @@
-.container {
-    height: 100%;
-    width: 100%;
-    padding-left: 5%;
-    padding-top: 5%;
-    display: flex;
-    flex: 1;
-    justify-content: space-between;
-    flex-direction: column; 
-    }
+.mainContainer {
+  flex: 1;
+  padding: 45px 0 70px 15px;
+}
+.header {
+  font-family: 'heading';
+  font-size: 50px;
+}
+.border {
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  width: 85%;
+  height: 1px;
+  margin-left: 5;
+}
+.sousHeaderContainer {
+  margin-bottom: 10px;
+}
+.sousHeader {
+  flex-direction: row;
+  margin: 15px 0px 5px 12px;
+}
 
-    .cont {
-        height: 35%;
-    }
+.smallTitle {
+  font-family: 'txt';
+  font-size: 20;
+  margin-bottom: 5;
+  margin-left: 12;
+}
+.scrollContainer {
+  width: 100%;
+  height: 400px;
+}
 
-    .header {
-        margin-top: 9%;
-        width: 100%;
-    }
-
-    .border {
-        margin-top: 3;
-        border-bottom-color: black;
-        border-bottom-width: 2px;
-        width: 85%;
-        height: 1px;
-        margin-left: 5;
-      }
-
-    .title{
-        font-family: "heading";
-        font-size: 3rem;
-    }
-    .titleCard {
-        font-family: "heading";
-        font-size: 1.5rem;
-        color: white;
-    }
-    .sousHeader{
-        flex-direction: row;
-        height: 15%;
-    }
-    .bottomInfo {
-        flex: 1;
-        flex-direction: column;
-        justify-content: flex-end;
-    }
-    
-    .smallTitle {
-        font-family: "txt";
-        font-size: 20;
-        margin-bottom: 5;
-        margin-left: 12;
-    }
-    
-    .swipeLeft {
-        position:absolute;
-        top: 10;
-        left: 10;
-        z-index: 100;
-        margin-top: -40;
-    }
-
-    .topInfos{
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .tripContainer {
-        margin-right: 15px;
-        height: 100%;
-        width: 65%;
-        flex: 1;
-        position: relative;
-        flex-direction: column;
-        border-radius: 35px;
-    }
-    .cardInfos {
-        font-family: "txtLight";
-        font-size: 15;
-        color: white;
-    }
-
-    .scrollView {
-        margin-top: 2%;
-        margin-bottom: 5%;
-        flex-direction: row;
-        max-height: 200px;
-    }
+.tripCardContainer {
+  margin-right: 15px;
+  width: 250px;
+  height: 100%;
+}
+.tripCardheart {
+  padding: 15px;
+}
+.tripCardCountry {
+  padding: 15px;
+}
+.tripCardTitle {
+  justify-self: flex-start;
+  font-size: 19px;
+  max-width: 100%;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.tripCardDate {
+  max-width: 100px;
+  font-size: 12px;
+  padding: 0 0 15px 15px;
+}
+.tripCardPrice {
+  font-size: 12px;
+  padding: 0 15px 15px 0;
+}

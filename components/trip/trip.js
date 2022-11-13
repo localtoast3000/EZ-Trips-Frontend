@@ -1,6 +1,5 @@
 import { ImageBackground, TouchableOpacity, View, Text } from 'react-native';
 import styles from './style.css';
-import { LinearGradient } from 'expo-linear-gradient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,9 +8,12 @@ import { serverURL } from '../../api/backend_request';
 import { getMonthName } from '../../assets/helpers';
 
 export default function Trip({
+  containerStyles,
+  topElementsContainerStyles,
+  countryStyles,
+  heartStyles,
   titleStyles,
   dateStyles,
-  countryStyles,
   priceStyles,
   ...props
 }) {
@@ -93,13 +95,13 @@ export default function Trip({
       <ImageBackground
         imageStyle={{ borderRadius: 15 }}
         source={{ uri: props.background }}
-        style={styles.imageBackground}
+        style={{ ...styles.imageBackground, ...containerStyles }}
       >
         <View style={styles.imageLayer}></View>
-        <View style={styles.topInfos}>
+        <View style={{ ...styles.topInfos, ...topElementsContainerStyles }}>
           <Text style={{ ...styles.country, ...countryStyles }}>{props.country}</Text>
           <AntDesign
-            style={styles.heart}
+            style={{ ...styles.heart, ...heartStyles }}
             name='heart'
             size={18}
             color={
@@ -118,12 +120,12 @@ export default function Trip({
             From {start} to {end}
           </Text>
           {props.price ? (
-            <Text style={styles.totalPrice}>
-              Total price: <Text style={styles.boldText}>{price}</Text>€
+            <Text style={{ ...styles.price, ...priceStyles }}>
+              Total price: <Text style={styles.boldText}>{price}</Text> €
             </Text>
           ) : (
-            <Text style={styles.lowestPrice}>
-              From <Text style={styles.boldText}>{price}</Text>€
+            <Text style={{ ...styles.price, ...priceStyles }}>
+              From <Text style={styles.boldText}>{price}</Text> €
             </Text>
           )}
         </View>

@@ -1,13 +1,5 @@
-.container {
-  padding: 25px;
-  flex: 1;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-around;
-}
-.scrollView {
-  height: 1000px;
-  border: solid black;
+.mainContainer {
+  padding: 15px;
 }
 .header {
   margin-top: 35;
@@ -24,64 +16,88 @@
   margin-bottom: 10px;
 }
 
-.highlight {
-  flex: 1;
-  width: 100%;
-}
-
-.text {
-  font-family: 'txt';
-}
-
 .border {
   border-bottom-color: black;
   border-bottom-width: 2px;
   width: 100%;
-  background-color: pink;
-  height: 1px;
   margin-top: 15px;
-  align-self: center;
 }
 
-.catalogue {
-  flex: 1;
-  margin-top: 30px;
-}
-.tripCardTitle {
-  max-width: 280;
-}
-.tripCardDate {
-  max-width: 100;
-}
-
-/* Cunt */
 .highlightContainer {
   flex: 1;
-  margin-bottom: 8%;
-  height: 100%;
+  margin-bottom: 25px;
 }
-
+.highlightHeader {
+  margin: 10px;
+  font-family: 'txt';
+  font-size: 16px;
+}
 .highlightWrapper {
-  margin-top: 10px;
-  height: 90%;
   flex-direction: row;
 }
-
-.infoContainer {
-  width: 66%;
-  height: 90%;
-  padding-left: 15px;
-}
-
-.title {
-  font-family: 'heading';
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-.img {
+.highlightImg {
   border-radius: 15px;
-  flex: 1;
+  width: 130px;
+  height: 100%;
+  margin-right: auto;
+}
+.imageLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.058);
+  border-radius: 15px;
+}
+.highlightInfoContainer {
+  max-width: 180;
+}
+.highlightTitle {
+  font-family: 'heading';
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.highlightDates {
+  font-family: 'txt';
+  margin-bottom: 5px;
+}
+.highlightDescription {
+  font-family: 'txt';
+}
+
+.tripsHeader {
+  font-family: 'txt';
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.tripCardContainer {
+  margin-right: 20px;
+  width: 100%;
+  height: 230px;
+  margin-bottom: 15px;
+}
+.tripCardheart {
+  padding: 20px;
+}
+.tripCardCountry {
+  padding: 20px;
+}
+.tripCardTitle {
+  justify-self: flex-start;
+  font-size: 27px;
+  max-width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.tripCardDate {
+  max-width: 150px;
+  font-size: 16px;
+  padding: 0 0 20px 20px;
+}
+.tripCardPrice {
+  font-size: 16px;
+  padding: 0 20px 20px 0;
 }

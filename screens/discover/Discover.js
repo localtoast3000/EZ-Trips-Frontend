@@ -1,5 +1,4 @@
 import { View, Text, ImageBackground } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import styles from './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFonts } from '../../assets/fonts/fonts';
@@ -51,30 +50,34 @@ export default function Discover({ navigation }) {
   const trips = tripsData.map((data, i) => {
     //convert number into month's names
     return (
-      <View key={i} style={{ height: 180 }}>
-        <Trip
-          propsKey={i}
-          titleStyles={styles.tripCardTitle}
-          dateStyles={styles.tripCardDate}
-          id={data._id}
-          {...data}
-          isFavorite={favorites.some((favorite) => favorite === data._id)}
-        />
-      </View>
+      <Trip
+        key={i}
+        containerStyles={styles.tripCardContainer}
+        topElementsContainerStyles={styles.tripCardTopElementsContainer}
+        countryStyles={styles.tripCardCountry}
+        heartStyles={styles.tripCardheart}
+        titleStyles={styles.tripCardTitle}
+        dateStyles={styles.tripCardDate}
+        priceStyles={styles.tripCardPrice}
+        id={data._id}
+        {...data}
+        isFavorite={favorites.some((favorite) => favorite === data._id)}
+      />
     );
   });
 
   return (
     <>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.mainContainer}>
         <View style={styles.header}>
           <Text style={styles.title}>Discover</Text>
           <Text style={styles.text}>Choose your next adventure.</Text>
           <View style={styles.border}></View>
         </View>
         <Highlight />
-        <Text style={styles.text}>Our recommendations</Text>
-        {trips}
+        <Text style={styles.tripsHeader}>Our recommendations</Text>
+        <View style={styles.tripsContainer}>{trips}</View>
+        <View style={{ height: 100 }}></View>
       </ScrollView>
       <BottomToolbar />
     </>
@@ -84,29 +87,21 @@ export default function Discover({ navigation }) {
 function Highlight() {
   return (
     <View style={styles.highlightContainer}>
-      <Text style={{ fontFamily: 'txt' }}>Highlight</Text>
+      <Text style={styles.highlightHeader}>Highlight</Text>
       <View style={styles.highlightWrapper}>
         <ImageBackground
           imageStyle={{ borderRadius: 15 }}
+          style={styles.highlightImg}
           source={{
             uri: 'https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80',
           }}
-          style={styles.img}
         >
-          <LinearGradient
-            start={[1, 1]}
-            end={[1, 0]}
-            colors={['rgba(0,0,0,0.3)', 'transparent']}
-            style={{ height: '100%', width: '100%', borderRadius: 15 }}
-          ></LinearGradient>
+          <View style={styles.imageLayer}></View>
         </ImageBackground>
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.title}>Norway fjords and northern lights</Text>
-          <Text style={{ fontFamily: 'txt', fontWeight: 'bold', marginBottom: 5 }}>
-            20 jan. - 28 feb. 2023
-          </Text>
-          <Text style={{ fontFamily: 'txt' }}>
+        <View style={styles.highlightInfoContainer}>
+          <Text style={styles.highlightTitle}>Norway fjords and northern lights</Text>
+          <Text style={styles.highlightDates}>20 jan. - 28 feb. 2023</Text>
+          <Text style={styles.highlightDescription}>
             We have spent decades in search for the most beautiful spots in the north,
             come join us! We bring you to the right spot at the right time. Come chase the
             northern lights with us.
