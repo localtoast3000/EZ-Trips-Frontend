@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import styles from './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFonts } from '../../assets/fonts/fonts';
@@ -7,64 +7,29 @@ import Trip from '../../components/trip/trip';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import { ScrollView } from 'react-native-gesture-handler';
 import { setFavorites } from '../../reducers/user';
-import { serverURL } from '../../api/backend_request';
+import { getData } from '../../api/backend_request';
+import { selectUser } from '../../reducers/user';
 
 export default function Discover({ navigation }) {
+  const loadedFonts = loadFonts();
   const dispatch = useDispatch();
-  //STATE TO STORE ALL THE TRIPS TO DISPLAY
   const [tripsData, setTripsData] = useState([]);
-  const favorites = useSelector((state) => state.user.favorites);
-  const TOKEN = useSelector((state) => state.user.value.token);
-  //GET ALL THE TRIPS WHEN LOADING THE SCREEN + FAVORITES OF THE USER TO SAVE IN THE REDUCER
-  useEffect(() => {
-    //GET ALL THE TRIPS
-    fetch(`${serverURL}/trips`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          setTripsData(data.trips);
-        } else {
-          console.log('Fetch of trips failed on Discover.');
-        }
-      });
+  const { user, favorites } = useSelector(selectUser);
 
-    //SAVE ALL THE FAVORITES IN THE REDUCER
-    fetch(`${serverURL}/users/idLike/${TOKEN}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          console.log(data.tripsLiked);
-          console.log('reducer initialized successfully');
-          dispatch(setFavorites(data.tripsLiked));
-        } else {
-          console.log('reducer failed on initialisation');
-        }
-      });
+  useEffect(() => {
+    (async () => {
+      const res = await getData('/trips');
+      if (res.result) setTripsData(res.trips);
+      else console.log('Failed to fetch trips');
+    })();
+    (async () => {
+      const res = await getData('/users/idLike/' + user.token);
+      if (res.result) dispatch(setFavorites(res.tripsLiked));
+      else console.log('Failed to fetch user likes');
+    })();
   }, []);
 
-  //MAKE SURE THE FONTS ARE LOADED
-  const loadedFonts = loadFonts();
   if (!loadedFonts) return <></>;
-
-  //MAP TO DISPLAY ALL THE TRIPS
-  const trips = tripsData.map((data, i) => {
-    //convert number into month's names
-    return (
-      <Trip
-        key={i}
-        containerStyles={styles.tripCardContainer}
-        topElementsContainerStyles={styles.tripCardTopElementsContainer}
-        countryStyles={styles.tripCardCountry}
-        heartStyles={styles.tripCardheart}
-        titleStyles={styles.tripCardTitle}
-        dateStyles={styles.tripCardDate}
-        priceStyles={styles.tripCardPrice}
-        id={data._id}
-        {...data}
-        isFavorite={favorites.some((favorite) => favorite === data._id)}
-      />
-    );
-  });
 
   return (
     <>
@@ -76,7 +41,39 @@ export default function Discover({ navigation }) {
         </View>
         <Highlight />
         <Text style={styles.tripsHeader}>Our recommendations</Text>
-        <View style={styles.tripsContainer}>{trips}</View>
+        <View style={styles.tripsContainer}>
+          {tripsData.map((trip, i) => {
+            return (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() =>
+                  navigation.navigate({
+                    name: 'Product',
+                    params: trip,
+                  })
+                }
+              >
+                <Trip
+                  key={i}
+                  id={trip._id}
+                  name={trip.name}
+                  country={trip.country}
+                  travelPeriod={trip.travelPeriod}
+                  background={trip.background}
+                  minPrice={Math.min(...trip.program.map(({ price }) => price))}
+                  isFavorite={favorites.some((favorite) => favorite === trip._id)}
+                  containerStyles={styles.tripCardContainer}
+                  topElementsContainerStyles={styles.tripCardTopElementsContainer}
+                  countryStyles={styles.tripCardCountry}
+                  heartStyles={styles.tripCardheart}
+                  titleStyles={styles.tripCardTitle}
+                  dateStyles={styles.tripCardDate}
+                  priceStyles={styles.tripCardPrice}
+                />
+              </TouchableOpacity>
+            );
+          })}
+        </View>
         <View style={{ height: 100 }}></View>
       </ScrollView>
       <BottomToolbar />

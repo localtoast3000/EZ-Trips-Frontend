@@ -7,68 +7,68 @@ import HorizontalScrollView from '../../components/horzontal_scroll_view/Horizon
 import HeartIcon from '../../components/icons/HeartIcon';
 import Trip from '../../components/trip/trip';
 import styles from './style.css';
-import { serverURL } from '../../api/backend_request';
+import { getData } from '../../api/backend_request';
 import { useSelector } from 'react-redux';
+import { selectUser } from '../../reducers/user';
 
 export default function MyTrips({ navigation }) {
-  const TOKEN = useSelector((state) => state.user.value.token);
-  const favorites = useSelector((state) => state.user.favorites);
+  const { user, favorites } = useSelector(selectUser);
   const [tripsLiked, setTripsLiked] = useState([]);
   const [tripsBooked, setTripsBooked] = useState([]);
 
   useEffect(() => {
-    fetch(`${serverURL}/users/like/${TOKEN}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.result) {
-          console.log('fetch of liked trips successful on MyTrips');
-          setTripsLiked(data.tripsLiked);
-        } else {
-          console.log('Fetch of trips failed on MyTrips.');
-        }
-      });
+    (async () => {
+      const res = await getData('/users/like/' + user.token);
+      if (res.result) setTripsLiked(res.tripsLiked);
+      else console.log('Failed to fetch users likes');
+    })();
 
-    //GET THE TRIPS BOOKED BY THE USER
-    fetch(`${serverURL}/orders/${TOKEN}`)
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.result) {
-          const bookedTrips = [];
-          console.log('Fetch of booked trips successful on MyTrips');
-          for (let order of response.data) {
-            //Si les orders sont en statut Validated, on les ajoute à tripsBooked.
-            if (order.status === 'Validated') {
-              bookedTrips.unshift(order);
-            }
+    (async () => {
+      const res = await getData('/orders/' + user.token);
+      if (res.result) {
+        const bookedTrips = [];
+        for (let order of res.data) {
+          if (order.status === 'Validated') {
+            bookedTrips.unshift(order);
           }
-          setTripsBooked(bookedTrips);
         }
-        //si data.result = false, le fetch a failed
-        else {
-          console.log('Fetch of booked trips failed on MyTrips.');
-        }
-      });
+        setTripsBooked(bookedTrips);
+      } else console.log('Failed to fetch orders');
+    })();
   }, [favorites]);
 
   let likedTrips = <Text style={{ fontFamily: 'txt' }}>No trips liked yet.</Text>;
   if (tripsLiked && tripsLiked.length > 0) {
-    likedTrips = tripsLiked.map((data, i) => {
-      const isFavorite = favorites.some((favorite) => favorite.id === data.id);
+    likedTrips = tripsLiked.map((trip, i) => {
       return (
-        <Trip
-          key={i}
-          containerStyles={styles.tripCardContainer}
-          topElementsContainerStyles={styles.tripCardTopElementsContainer}
-          countryStyles={styles.tripCardCountry}
-          heartStyles={styles.tripCardheart}
-          titleStyles={styles.tripCardTitle}
-          dateStyles={styles.tripCardDate}
-          priceStyles={styles.tripCardPrice}
-          {...data}
-          id={data._id}
-          isFavorite={isFavorite}
-        ></Trip>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() =>
+            navigation.navigate({
+              name: 'Product',
+              params: trip,
+              merge: true,
+            })
+          }
+        >
+          <Trip
+            key={i}
+            id={trip._id}
+            name={trip.name}
+            country={trip.country}
+            travelPeriod={trip.travelPeriod}
+            background={trip.background}
+            minPrice={Math.min(...trip.program.map(({ price }) => price))}
+            isFavorite={favorites.some((favorite) => favorite === trip._id)}
+            containerStyles={styles.tripCardContainer}
+            topElementsContainerStyles={styles.tripCardTopElementsContainer}
+            countryStyles={styles.tripCardCountry}
+            heartStyles={styles.tripCardheart}
+            titleStyles={styles.tripCardTitle}
+            dateStyles={styles.tripCardDate}
+            priceStyles={styles.tripCardPrice}
+          ></Trip>
+        </TouchableOpacity>
       );
     });
   }

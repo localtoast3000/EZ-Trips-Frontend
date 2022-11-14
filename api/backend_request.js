@@ -7,6 +7,12 @@ function constructURL(endpoint) {
   return `${serverURL}${endpoint}`;
 }
 
+export async function getData(endpoint) {
+  const result = await fetch(constructURL(endpoint));
+  const res = await result.json();
+  return res;
+}
+
 export async function postData(endpoint, data) {
   const result = await fetch(constructURL(endpoint), {
     method: 'POST',
@@ -16,6 +22,17 @@ export async function postData(endpoint, data) {
     body: JSON.stringify(data),
   });
   const res = await result.json();
-  console.log(res);
+  return res;
+}
+
+export async function deleteData(endpoint, data) {
+  const result = await fetch(constructURL(endpoint), {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const res = await result.json();
   return res;
 }

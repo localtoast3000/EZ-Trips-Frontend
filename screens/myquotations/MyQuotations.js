@@ -5,48 +5,41 @@ import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import HorizontalScrollView from '../../components/horzontal_scroll_view/HorizontalScrollView';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Trip from '../../components/trip/trip';
+import Quote from './quote/Quote';
 import styles from './style.css';
-import { serverURL } from '../../api/backend_request';
+import { getData } from '../../api/backend_request';
 import { useSelector } from 'react-redux';
+import { selectUser } from '../../reducers/user';
 
 export default function MyQuotations() {
   const loadedFonts = loadFonts();
-  const TOKEN = useSelector((state) => state.user.value.token);
+  const { user } = useSelector(selectUser);
   const [requestSent, setRequestSent] = useState([]);
   const [quotationReceived, setQuotationReceived] = useState([]);
 
   useEffect(() => {
-    //GET THE TRIPS BOOKED BY THE USER
-    fetch(`${serverURL}/orders/${TOKEN}`)
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.result) {
-          const totalRequests = [];
-          const totalQuotations = [];
-          console.log('Fetch of orders successful on MyQuotations');
-          for (let order of response.data) {
-            //Si les orders sont en statut Requested ou Received, on les ajoute aux états React correspondant
-            if (
-              order.status === 'Requested' &&
-              !totalRequests.some((e) => e._id === order._id)
-            ) {
-              //utilisation de unshift() plutôt que push, car unshift() ajoute la valeur au début du tableau ; ainsi le dernier élément ajouté s'affiche en 1er.
-              totalRequests.unshift(order);
-            } else if (
-              order.status === 'Received' &&
-              !totalQuotations.some((e) => e._id === order._id)
-            ) {
-              totalQuotations.unshift(order);
-            }
+    (async () => {
+      const res = await getData('/orders/' + user.token);
+      if (res.result) {
+        const totalRequests = [];
+        const totalQuotations = [];
+        for (let order of res.data) {
+          if (
+            order.status === 'Requested' &&
+            !totalRequests.some((e) => e._id === order._id)
+          ) {
+            totalRequests.unshift(order);
+          } else if (
+            order.status === 'Received' &&
+            !totalQuotations.some((e) => e._id === order._id)
+          ) {
+            totalQuotations.unshift(order);
           }
-          setRequestSent(totalRequests);
-          setQuotationReceived(totalQuotations);
         }
-        //si data.result = false, le fetch a failed
-        else {
-          console.log('Fetch of orders failed on MyQuotations.');
-        }
-      });
+        setRequestSent(totalRequests);
+        setQuotationReceived(totalQuotations);
+      } else console.log('Failed to fetch orders');
+    })();
   }, []);
 
   let sentDisplay = <Text style={{ fontFamily: 'txt' }}>No quotation asked yet.</Text>;
@@ -58,8 +51,8 @@ export default function MyQuotations() {
 
       return (
         <View key={i} style={styles.tripQuoteStatusContainer}>
-          <QuotationStatusMsg status='requested' travelerQty={10} />
-          <Trip
+          <Quote
+            travelerQty={data.nbTravellers}
             containerStyles={styles.tripCardContainer}
             topElementsContainerStyles={styles.tripCardTopElementsContainer}
             countryStyles={styles.tripCardCountry}
@@ -74,7 +67,7 @@ export default function MyQuotations() {
             name={data.trip.name}
             start={start}
             end={end}
-          ></Trip>
+          />
         </View>
       );
     });
@@ -91,8 +84,8 @@ export default function MyQuotations() {
 
       return (
         <View key={i} style={styles.tripQuoteStatusContainer}>
-          <QuotationStatusMsg status='recived' travelerQty={data.nbTravellers} />
-          <Trip
+          <Quote
+            travelerQty={data.nbTravellers}
             containerStyles={styles.tripCardContainer}
             topElementsContainerStyles={styles.tripCardTopElementsContainer}
             heartStyles={styles.tripsCardheart}
@@ -106,7 +99,7 @@ export default function MyQuotations() {
             name={data.trip.name}
             start={start}
             end={end}
-          ></Trip>
+          />
         </View>
       );
     });
@@ -132,21 +125,6 @@ export default function MyQuotations() {
       </View>
       <BottomToolbar />
     </>
-  );
-}
-
-function QuotationStatusMsg({ status, travelerQty }) {
-  return (
-    <View style={styles.quotationStatusMsgContainer}>
-      <Text style={{ ...styles.quoteStatus, color: 'white' }}>
-        {status === 'requested'
-          ? 'Pending quotation request for '
-          : 'Quotation recived for'}
-        <Text style={styles.numberOfPeople}>
-          {travelerQty} {travelerQty === 1 ? 'person' : 'people'}
-        </Text>
-      </Text>
-    </View>
   );
 }
 

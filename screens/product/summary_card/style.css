@@ -1,0 +1,5 @@
+.infoContainerModal {
+  flex-direction: column;
+  justify-items: space-between;
+  width: 100%;
+}

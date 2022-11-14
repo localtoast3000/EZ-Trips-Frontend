@@ -10,7 +10,7 @@ import {
 import styles from './style.css';
 import { serverURL } from '../../api/backend_request';
 import { loadFonts } from '../../assets/fonts/fonts';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Trip from '../../components/trip/trip';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import DateRangePicker from 'rnv-date-range-picker';
@@ -193,12 +193,12 @@ export default function Search({ navigation }) {
 
         <View style={styles.resultsCounterAndFilterIconContainer}>
           <Text style={styles.text}>{tripsData ? tripsData.length : 0} results</Text>
-          <AntDesign
-            name='filter'
-            size={20}
-            color='black'
+          <TouchableOpacity
+            style={styles.filterBtn}
             onPress={() => setModalVisible(!modalVisible)}
-          />
+          >
+            <AntDesign name='filter' size={22} color='black' />
+          </TouchableOpacity>
         </View>
         <View style={styles.tripContainer}>{tripsData ? trips : <View></View>}</View>
         <Modal

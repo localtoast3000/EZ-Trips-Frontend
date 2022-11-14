@@ -1,0 +1,26 @@
+.recapTripCard {
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffffcc;
+  border-radius: 15px;
+  padding: 15px;
+  margin-top: auto;
+}
+.recapTriptitle {
+  font-family: 'heading';
+  font-size: 30px;
+}
+.recapTripcountry {
+  font-family: 'txtMedium';
+  font-size: 16px;
+  padding: 10px 0 5px 0;
+  color: #8d8d8d;
+}
+.recapTripDays {
+  font-family: 'txt';
+  font-size: 16px;
+}
+.recapTripPrice {
+  font-family: 'txt';
+  font-size: 16px;
+}
