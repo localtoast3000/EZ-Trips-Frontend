@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Moment from "moment";
-import { extendMoment } from "moment-range";
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
 const moment = extendMoment(Moment);
 
@@ -25,32 +25,30 @@ export default ({
 
   const firstDayOfMonth = () => {
     let dateObject = selectedDate;
-    let firstDay = dateObject.startOf("month").format("d");
+    let firstDay = dateObject.startOf('month').format('d');
     return firstDay;
   };
 
   const getRows = () => {
     const blanks = [];
     for (let i = 0; i < firstDayOfMonth(); i++) {
-      blanks.push(
-        <View key={`${i}_days_blanks`} style={styles.emptyDayNameContainer} />
-      );
+      blanks.push(<View key={`${i}_days_blanks`} style={styles.emptyDayNameContainer} />);
     }
 
     const daysInMonth = [];
     for (let d = 1; d <= selectedDate.daysInMonth(); d++) {
       const date = moment(selectedDate).date(d);
-      const isDisabledMAXD = maxDate ? date.isAfter(maxDate, "days") : false;
-      const isDisabledMIND = minDate ? date.isBefore(minDate, "days") : false;
+      const isDisabledMAXD = maxDate ? date.isAfter(maxDate, 'days') : false;
+      const isDisabledMIND = minDate ? date.isBefore(minDate, 'days') : false;
 
-      const isToday = date.isSame(moment(), "day");
+      const isToday = date.isSame(moment(), 'day');
       const iddd = secondDate?.isBefore(firstDate);
       const isSelected =
         (iddd
           ? date.isBetween(secondDate, firstDate)
           : date.isBetween(firstDate, secondDate)) ||
-        date.isSame(firstDate, "day") ||
-        date.isSame(secondDate, "day");
+        date.isSame(firstDate, 'day') ||
+        date.isSame(secondDate, 'day');
 
       daysInMonth.push(
         <TouchableOpacity
@@ -97,10 +95,7 @@ export default ({
         const remain = 7 - cells.length;
         for (let i = 0; i < remain; i++) {
           cells.push(
-            <View
-              key={`${i}_remain_dates`}
-              style={styles.emptyDayNameContainer}
-            />
+            <View key={`${i}_remain_dates`} style={styles.emptyDayNameContainer} />
           );
         }
         rows.push(
@@ -123,43 +118,43 @@ export default ({
 
 const styles = StyleSheet.create({
   weekRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   date: {
-    textAlign: "center",
+    textAlign: 'center',
   },
   dayNameContainer: {
     flex: 1,
     minHeight: 40,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   todayNameContainer: {
     height: 30,
     width: 30,
     borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#177861",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#177861',
   },
   emptyDayNameContainer: {
     flex: 1,
     minHeight: 40,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   selectedDate: {
-    color: "white",
+    color: 'white',
   },
   noneSelectedDate: {
-    color: "black",
+    color: 'black',
   },
   today: {
-    color: "blue",
+    color: '#177861',
   },
   dayNameStyle: {
     fontSize: 11,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });

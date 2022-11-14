@@ -45,6 +45,7 @@ export default function Discover({ navigation }) {
           {tripsData.map((trip, i) => {
             return (
               <TouchableOpacity
+                key={i}
                 activeOpacity={0.8}
                 onPress={() =>
                   navigation.navigate({
@@ -54,7 +55,6 @@ export default function Discover({ navigation }) {
                 }
               >
                 <Trip
-                  key={i}
                   id={trip._id}
                   name={trip.name}
                   country={trip.country}

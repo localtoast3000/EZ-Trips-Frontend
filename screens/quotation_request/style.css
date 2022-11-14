@@ -37,36 +37,7 @@
 .headerBottomRow {
   margin-top: 3px;
 }
-.numberTripsBtnsContainer {
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  width: 100%;
-  padding: 30px 10px;
-}
-.numberTripsBtnsWrapper {
-  flex-direction: row;
-}
-.numberTripsBtnsLabel {
-  font-size: 16px;
-  font-family: 'txtMedium';
-}
-.numberTripsBtnTxt {
-  font-size: 16px;
-  font-family: 'txt';
-}
-.countButton {
-  height: 25px;
-  width: 25px;
-  border-radius: 3px;
-  border: solid 1px black;
-  align-items: center;
-  justify-content: center;
-}
-.numberTripsValue {
-  font-family: 'txt';
-  font-size: 16px;
-}
+
 .textArea {
   border-radius: 4px;
   border-color: black;

@@ -80,11 +80,6 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
     endMonth: getMonthName(trip.travelPeriod[0].end),
   };
 
-  let urls = [];
-  let photoDisplayed = trip.photos.map((e, i) => {
-    urls.push({ url: e });
-  });
-
   return (
     <View style={styles.scrollView}>
       <ImageBackground
@@ -125,7 +120,7 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               scrollEnabled={false}
               height={250}
               style={styles.caroussel}
-              dataSource={urls}
+              dataSource={trip.photos.map((photo) => ({ url: photo }))}
             />
             <View style={styles.modalInfoContainer}>
               <ModalHeader header={trip.name} country={trip.country} />

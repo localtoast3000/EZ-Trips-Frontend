@@ -10,8 +10,9 @@ import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment';
 import Cross from '../../components/icons/cross';
-import DateRangePicker from '../../components/date-range-picker/DateRangePicker';
+import DateRangePicker from '../../components/form_elements/date-range-picker/DateRangePicker';
 import { serverURL } from '../../api/backend_request';
+import HorizontalCounter from '../../components/form_elements/horizontal_counter/HorizontalCounter';
 
 export default function Quotation_Request({ navigation, route: { params: props } }) {
   const loadedFonts = loadFonts();
@@ -65,9 +66,6 @@ export default function Quotation_Request({ navigation, route: { params: props }
 
   if (!loadedFonts) return <></>;
 
-  const increment = () => setnbTravelers((c) => c + 1);
-  const decrement = () => (nbTravelers > 1 ? setnbTravelers((c) => c - 1) : false);
-
   return (
     <>
       <ScrollView style={styles.mainContainer}>
@@ -90,32 +88,12 @@ export default function Quotation_Request({ navigation, route: { params: props }
           ) : (
             false
           )}
-          <View style={styles.numberTripsBtnsContainer}>
-            <Text style={styles.numberTripsBtnsLabel}>Number of travelers</Text>
-            <View style={styles.numberTripsBtnsWrapper}>
-              <TouchableOpacity
-                style={{
-                  ...styles.numberTripsBtn,
-                  ...styles.countButton,
-                  marginRight: 20,
-                }}
-                onPress={() => decrement()}
-              >
-                <Text style={styles.numberTripsBtnTxt}>-</Text>
-              </TouchableOpacity>
-              <Text style={styles.numberTripsValue}>{nbTravelers}</Text>
-              <TouchableOpacity
-                style={{
-                  ...styles.numberTripsBtn,
-                  ...styles.countButton,
-                  marginLeft: 20,
-                }}
-                onPress={() => increment()}
-              >
-                <Text style={styles.numberTripsBtnTxt}>+</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <HorizontalCounter
+            label='Number of travelers'
+            onValueChange={(count) => setnbTravelers(count)}
+            initalValue={1}
+            notSmallerThanInital={true}
+          />
           <View style={styles.calendarContainer}>
             <DateRangePicker
               onSelectDateRange={(range) => {

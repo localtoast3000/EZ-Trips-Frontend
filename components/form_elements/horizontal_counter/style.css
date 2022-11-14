@@ -1,0 +1,31 @@
+.mainContainer {
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  padding: 30px 10px;
+}
+
+.label {
+  font-size: 16px;
+  font-family: 'txtMedium';
+}
+.btnsWrapper {
+  flex-direction: row;
+}
+.countButton {
+  height: 25px;
+  width: 25px;
+  border-radius: 3px;
+  border: solid 1px black;
+  align-items: center;
+  justify-content: center;
+}
+.btnTxt {
+  font-size: 16px;
+  font-family: 'txt';
+}
+.value {
+  font-family: 'txt';
+  font-size: 16px;
+}

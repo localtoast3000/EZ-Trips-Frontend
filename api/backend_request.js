@@ -7,6 +7,14 @@ function constructURL(endpoint) {
   return `${serverURL}${endpoint}`;
 }
 
+export async function searchData(endpoint, queryObj) {
+  const url = new URL(constructURL(endpoint));
+  Object.keys(queryObj).forEach((key) => url.searchParams.append(key, queryObj[key]));
+  const result = await fetch(url);
+  const res = await result.json();
+  return res;
+}
+
 export async function getData(endpoint) {
   const result = await fetch(constructURL(endpoint));
   const res = await result.json();
