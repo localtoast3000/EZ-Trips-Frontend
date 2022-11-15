@@ -4,6 +4,7 @@
 }
 .header {
   font-family: 'heading';
+  margin-bottom: 10px;
 }
 .border {
   border-bottom-color: black;
@@ -11,6 +12,7 @@
   width: 85%;
   height: 1px;
   margin-left: 5;
+  margin-bottom: 20px;
 }
 .sousHeaderContainer {
   margin-bottom: 10px;

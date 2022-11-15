@@ -1,11 +1,13 @@
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import { useState } from 'react';
-import HorizontalRangeSlider from '../../../components/form_elements/HorizontalRangeSlider';
+import HorizontalDoubleRangeSlider from '../../../components/form_elements/HorizontalDoubleRangeSlider';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import styles from './style.css';
 
 export default function BudgetSection() {
-  const [minBudget, setMinBudget] = useState(0);
+  const [minBudget, setMinBudget] = useState(300);
   const [maxBudget, setMaxBudget] = useState(8000);
+  const [rangeSliding, setRangeSliding] = useState(false);
 
   const budgetChange = (value) => {
     setMinBudget(value[0]);
@@ -21,32 +23,26 @@ export default function BudgetSection() {
           justifyContent: 'space-between',
           padding: 5,
         }}>
-        <View>
-          <Text>Min</Text>
-          <TextInput placeholder='0'>{minBudget}</TextInput>
-        </View>
-        <View>
-          <Text>Max</Text>
-          <TextInput placeholder='8000'>{maxBudget}</TextInput>
-        </View>
+        <Text>{minBudget} €</Text>
+        <Text>{maxBudget} €</Text>
       </View>
-
-      <HorizontalRangeSlider
-        min={300}
-        max={8000}
-        step={100}
-        minimumRange={50}
-        onValueChange={budgetChange}
-        overides={{
-          outboundColor: 'grey',
-          inboundColor: '#C46B4D',
-          thumbTintColor: '#C46B4D',
-          thumbStyle: { margin: 20 },
-          trackHeight: 3,
-          thumbSize: 16,
-          style: { margin: 10 },
-        }}
-      />
+      <View style={{ width: '100%', alignItems: 'center' }}>
+        <HorizontalDoubleRangeSlider
+          min={300}
+          max={8000}
+          step={100}
+          length={230}
+          minDistance={50}
+          onValuesChange={(values) => console.log(values)}
+          overides={{
+            containerStyle: { paddingHorizontal: 20, height: 40 },
+            trackStyle: { backgroundColor: '#177861' },
+            unselectedStyle: { backgroundColor: '#cacaca' },
+            markerStyle: { backgroundColor: '#177861', transform: [{ scale: 1.2 }] },
+            pressedMarkerStyle: { backgroundColor: '#177861' },
+          }}
+        />
+      </View>
     </View>
   );
 }
