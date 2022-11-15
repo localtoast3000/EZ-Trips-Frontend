@@ -31,20 +31,23 @@ export default function NexStep({ navigation, route: { params: data } }) {
       <BackgroundImageLayer
         source={mountImg}
         layerOpacity={0.1}
-        style={styles.imageBackground}
+        style={{
+          ...styles.imageBackground,
+          width: Dimensions.get('window').width * 1.25,
+          height: Dimensions.get('window').height,
+        }}
       />
+      <Text style={styles.title}>Next Steps</Text>
       <View
         style={{
+          left: Dimensions.get('window').width / 3.5,
           ...styles.mainContainer,
-        }}
-      >
-        <Text style={styles.title}>Next Steps</Text>
+        }}>
         <AnimatedProgressPath
-          containerScale={1.4}
+          containerScale={Dimensions.get('window').width / 261}
           containerStyle={{
-            ...styles.animatedPathContainer,
+            ...styles.animatedPathViewBox,
             top: Dimensions.get('window').height / 6.5,
-            left: Dimensions.get('window').width / 20,
           }}
           pathColor={nextStep.animatedPath}
           pointerColor={nextStep.animatedPointer}
@@ -60,8 +63,6 @@ export default function NexStep({ navigation, route: { params: data } }) {
 
 function stepInfoCollection(currentStep, incrementStep) {
   const { nextStep } = useTheme();
-  const heightGrid = Dimensions.get('window').height / 6.5;
-  const widthGrid = Dimensions.get('window').width / 20;
 
   return [
     <StepInfo
@@ -76,7 +77,12 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        transform: [{ translateX: widthGrid + 50 }, { translateY: heightGrid - 195 }],
+        top: Dimensions.get('window').height / 40,
+        transform: [
+          { scale: Dimensions.get('window').width / 370 },
+          { translateX: -40 },
+          { translateY: -70 },
+        ],
       }}
     />,
     <StepInfo
@@ -89,7 +95,12 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        transform: [{ translateX: widthGrid + 185 }, { translateY: heightGrid - 270 }],
+        top: Dimensions.get('window').height / 40,
+        transform: [
+          { scale: Dimensions.get('window').width / 370 },
+          { translateX: 90 },
+          { translateY: -142 },
+        ],
       }}
     />,
     <StepInfo
@@ -102,7 +113,12 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        transform: [{ translateX: widthGrid + 25 }, { translateY: heightGrid - 385 }],
+        top: Dimensions.get('window').height / 40,
+        transform: [
+          { scale: Dimensions.get('window').width / 370 },
+          { translateX: -70 },
+          { translateY: -260 },
+        ],
       }}
     />,
     <StepInfo
@@ -115,7 +131,12 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 160,
-        transform: [{ translateX: widthGrid + 140 }, { translateY: heightGrid - 485 }],
+        top: Dimensions.get('window').height / 40,
+        transform: [
+          { scale: Dimensions.get('window').width / 370 },
+          { translateX: 60 },
+          { translateY: -360 },
+        ],
       }}
     />,
     <LastStep
@@ -126,11 +147,15 @@ function stepInfoCollection(currentStep, incrementStep) {
       currentStep={currentStep}
       incrementStep={incrementStep}
       containerStyle={{
+        backgroundColor: nextStep.stepInfoBg,
+        width: Dimensions.get('window').width - 100,
+        position: 'absolute',
         backgroundColor: nextStep.lastStepInfoBg,
-        width: '80%',
-        marginLeft: 0,
-        left: '10%',
-        transform: [{ translateY: heightGrid - 615 }],
+        transform: [
+          { scale: Dimensions.get('window').width / 370 },
+          { translateX: -13 },
+          { translateY: 90 },
+        ],
       }}
     />,
   ];

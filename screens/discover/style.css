@@ -12,7 +12,6 @@
 
 .title {
   font-family: 'heading';
-  font-size: 3rem;
   margin-bottom: 10px;
 }
 
@@ -24,7 +23,6 @@
 }
 
 .highlightContainer {
-  flex: 1;
   margin-bottom: 25px;
 }
 .highlightHeader {
@@ -37,7 +35,6 @@
 }
 .highlightImg {
   border-radius: 15px;
-  width: 130px;
   height: 100%;
   margin-right: auto;
 }

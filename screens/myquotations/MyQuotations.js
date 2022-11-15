@@ -10,6 +10,7 @@ import styles from './style.css';
 import { getData } from '../../api/backend_request';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../reducers/user';
+import { headerScale } from '../../global/scales';
 
 export default function MyQuotations() {
   const loadedFonts = loadFonts();
@@ -50,7 +51,9 @@ export default function MyQuotations() {
       let end = data.end.slice(5, 10);
 
       return (
-        <View key={i} style={styles.tripQuoteStatusContainer}>
+        <View
+          key={i}
+          style={styles.tripQuoteStatusContainer}>
           <Quote
             travelerQty={data.nbTravellers}
             containerStyles={styles.tripCardContainer}
@@ -83,7 +86,9 @@ export default function MyQuotations() {
       let end = data.end.slice(5, 10);
 
       return (
-        <View key={i} style={styles.tripQuoteStatusContainer}>
+        <View
+          key={i}
+          style={styles.tripQuoteStatusContainer}>
           <Quote
             travelerQty={data.nbTravellers}
             containerStyles={styles.tripCardContainer}
@@ -110,15 +115,27 @@ export default function MyQuotations() {
   return (
     <>
       <View style={styles.mainContainer}>
-        <Text style={styles.header}>My quotations</Text>
+        <Text style={{ ...styles.header, ...headerScale }}>My quotations</Text>
         <TripScroller
           title='Request sent'
-          icon={<Ionicons name='send-outline' size={22} color={'black'} />}
+          icon={
+            <Ionicons
+              name='send-outline'
+              size={22}
+              color={'black'}
+            />
+          }
           trips={sentDisplay}
         />
         <TripScroller
           title='Quotation received'
-          icon={<Ionicons name='mail-unread-outline' size={24} color={'black'} />}
+          icon={
+            <Ionicons
+              name='mail-unread-outline'
+              size={24}
+              color={'black'}
+            />
+          }
           trips={sentDisplay}
         />
         <View style={{ height: 100 }}></View>
@@ -131,7 +148,10 @@ export default function MyQuotations() {
 function TripScroller({ icon, title, trips }) {
   return (
     <View style={styles.tripsHeaderAndScrollerContainer}>
-      <TripsHeader icon={icon} title={title} />
+      <TripsHeader
+        icon={icon}
+        title={title}
+      />
       <HorizontalScrollView style={styles.scrollContainer}>{trips}</HorizontalScrollView>
     </View>
   );

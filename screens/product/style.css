@@ -75,7 +75,7 @@
 }
 .modalInfoHeaderTitle {
   font-family: 'heading';
-  font-size: 36px;
+  margin-bottom: 20px;
 }
 .modalInfoHeaderCountry {
   margin-bottom: 20px;

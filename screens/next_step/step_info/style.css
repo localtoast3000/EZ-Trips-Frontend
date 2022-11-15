@@ -2,14 +2,11 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  left: 0;
-  top: 600px;
   height: 45px;
   border-radius: 25px;
-  margin: 0 10px 0 10px;
   padding-left: 15px;
   padding-right: 10px;
+  align-self: center;
 }
 .btn {
   padding: 10px;

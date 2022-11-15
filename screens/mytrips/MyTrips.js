@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { useState, useEffect } from 'react';
 import { loadFonts } from '../../assets/fonts/fonts';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
@@ -10,6 +10,7 @@ import styles from './style.css';
 import { getData } from '../../api/backend_request';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../reducers/user';
+import { headerScale } from '../../global/scales';
 
 export default function MyTrips({ navigation }) {
   const { user, favorites } = useSelector(selectUser);
@@ -42,6 +43,7 @@ export default function MyTrips({ navigation }) {
     likedTrips = tripsLiked.map((trip, i) => {
       return (
         <TouchableOpacity
+          key={i}
           activeOpacity={0.8}
           onPress={() =>
             navigation.navigate({
@@ -49,10 +51,8 @@ export default function MyTrips({ navigation }) {
               params: trip,
               merge: true,
             })
-          }
-        >
+          }>
           <Trip
-            key={i}
             id={trip._id}
             name={trip.name}
             country={trip.country}
@@ -66,8 +66,7 @@ export default function MyTrips({ navigation }) {
             heartStyles={styles.tripCardheart}
             titleStyles={styles.tripCardTitle}
             dateStyles={styles.tripCardDate}
-            priceStyles={styles.tripCardPrice}
-          ></Trip>
+            priceStyles={styles.tripCardPrice}></Trip>
         </TouchableOpacity>
       );
     });
@@ -96,8 +95,7 @@ export default function MyTrips({ navigation }) {
           background={data.trip.background}
           name={data.trip.name}
           start={start}
-          end={end}
-        ></Trip>
+          end={end}></Trip>
       );
     });
   }
@@ -108,18 +106,32 @@ export default function MyTrips({ navigation }) {
   return (
     <>
       <View style={styles.mainContainer}>
-        <Text style={styles.header}>My trips</Text>
+        <View style={styles.headerContainer}>
+          <Text style={{ ...styles.header, ...headerScale }}>My trips</Text>
+          <ViewDocumentsBtn onPress={() => navigation.navigate('MyDocuments')} />
+        </View>
         <TripScroller
           title='Liked trips'
-          icon={<HeartIcon scale={0.35} color='black' stroke={4} />}
+          icon={
+            <HeartIcon
+              scale={0.35}
+              color='black'
+              stroke={4}
+            />
+          }
           trips={likedTrips}
         />
         <TripScroller
           title='Planned Trips'
-          icon={<Plane scale={1.7} color='black' stroke={0.8} />}
+          icon={
+            <Plane
+              scale={1.7}
+              color='black'
+              stroke={0.8}
+            />
+          }
           trips={planedTrips}
         />
-        <ViewDocumentsBtn onPress={() => navigation.navigate('MyDocuments')} />
       </View>
       <BottomToolbar />
     </>
@@ -129,7 +141,10 @@ export default function MyTrips({ navigation }) {
 function TripScroller({ icon, title, trips }) {
   return (
     <>
-      <TripsHeader icon={icon} title={title} />
+      <TripsHeader
+        icon={icon}
+        title={title}
+      />
       <HorizontalScrollView style={styles.scrollContainer}>{trips}</HorizontalScrollView>
     </>
   );
@@ -149,8 +164,16 @@ function TripsHeader({ icon, title }) {
 
 function ViewDocumentsBtn({ onPress }) {
   return (
-    <TouchableOpacity style={styles.documentBtn} onPress={onPress}>
-      <Text style={styles.documentBtnTxt}>View documents</Text>
+    <TouchableOpacity
+      style={styles.documentBtn}
+      onPress={onPress}>
+      <Text
+        style={{
+          ...styles.documentBtnTxt,
+          fontSize: Dimensions.get('window').width / 30,
+        }}>
+        View documents
+      </Text>
     </TouchableOpacity>
   );
 }

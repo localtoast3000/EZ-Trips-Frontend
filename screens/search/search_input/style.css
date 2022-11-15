@@ -1,0 +1,12 @@
+.searchBarContainer {
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+  border-bottom-width: 2px;
+}
+.searchInput {
+  margin-right: auto;
+  height: 50px;
+  font-family: 'txt';
+}

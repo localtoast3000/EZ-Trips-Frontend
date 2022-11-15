@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
 import styles from './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFonts } from '../../assets/fonts/fonts';
@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { setFavorites } from '../../reducers/user';
 import { getData } from '../../api/backend_request';
 import { selectUser } from '../../reducers/user';
+import { headerScale } from '../../global/scales';
 
 export default function Discover({ navigation }) {
   const loadedFonts = loadFonts();
@@ -35,7 +36,7 @@ export default function Discover({ navigation }) {
     <>
       <ScrollView style={styles.mainContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>Discover</Text>
+          <Text style={{ ...styles.title, ...headerScale }}>Discover</Text>
           <Text style={styles.text}>Choose your next adventure.</Text>
           <View style={styles.border}></View>
         </View>
@@ -52,8 +53,7 @@ export default function Discover({ navigation }) {
                     name: 'Product',
                     params: trip,
                   })
-                }
-              >
+                }>
                 <Trip
                   id={trip._id}
                   name={trip.name}
@@ -88,14 +88,17 @@ function Highlight() {
       <View style={styles.highlightWrapper}>
         <ImageBackground
           imageStyle={{ borderRadius: 15 }}
-          style={styles.highlightImg}
+          style={{ ...styles.highlightImg, width: Dimensions.get('window').width / 2.5 }}
           source={{
             uri: 'https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80',
-          }}
-        >
+          }}>
           <View style={styles.imageLayer}></View>
         </ImageBackground>
-        <View style={styles.highlightInfoContainer}>
+        <View
+          style={{
+            ...styles.highlightInfoContainer,
+            width: Dimensions.get('window').width / 2.2,
+          }}>
           <Text style={styles.highlightTitle}>Norway fjords and northern lights</Text>
           <Text style={styles.highlightDates}>20 jan. - 28 feb. 2023</Text>
           <Text style={styles.highlightDescription}>

@@ -2,9 +2,29 @@
   flex: 1;
   padding: 45px 0 70px 15px;
 }
+.headerContainer {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 .header {
   font-family: 'heading';
-  font-size: 50px;
+}
+.documentBtn {
+  align-items: flex-end;
+  justify-content: center;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+  background-color: #177861;
+  padding: 5px;
+}
+
+.documentBtnTxt {
+  font-family: 'txt';
+  color: white;
+  padding: 0 5px;
 }
 .border {
   border-bottom-color: black;
@@ -12,6 +32,7 @@
   width: 85%;
   height: 1px;
   margin-left: 5;
+  margin-bottom: 20px;
 }
 .sousHeaderContainer {
   margin-bottom: 10px;
@@ -29,6 +50,7 @@
 .scrollContainer {
   width: 100%;
   height: 300px;
+  margin-bottom: 20px;
 }
 .tripCardContainer {
   margin-right: 15px;
@@ -56,20 +78,4 @@
 .tripCardPrice {
   font-size: 12px;
   padding: 0 15px 15px 0;
-}
-
-.documentBtn {
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  margin: 10px 0 20px 0;
-  border-radius: 10px;
-  width: 150;
-  background-color: #c46b4d;
-}
-
-.documentBtnTxt {
-  font-family: 'txt';
-  font-size: 14px;
-  color: white;
 }

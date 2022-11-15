@@ -71,7 +71,6 @@ export default function Quotation_Request({ navigation, route: { params: props }
       <ScrollView style={styles.mainContainer}>
         <View style={styles.container}>
           <View>
-            <Text style={styles.header}>Quotation</Text>
             <Text style={{ ...styles.header, ...styles.headerBottomRow }}>Request</Text>
           </View>
           {trip ? (
@@ -121,8 +120,7 @@ export default function Quotation_Request({ navigation, route: { params: props }
                 <TouchableOpacity
                   onPress={() => {
                     setModalVisible(false);
-                  }}
-                >
+                  }}>
                   <Cross color='red' />
                 </TouchableOpacity>
               </View>
@@ -131,8 +129,7 @@ export default function Quotation_Request({ navigation, route: { params: props }
             )}
             <TouchableOpacity
               style={{ ...styles.buttonConfirm, backgroundColor: theme.pa1 }}
-              onPress={handleconfirmButton}
-            >
+              onPress={handleconfirmButton}>
               <Text style={styles.confirmBtnTxt}>Confirm</Text>
             </TouchableOpacity>
           </View>

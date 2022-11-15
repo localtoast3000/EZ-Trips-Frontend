@@ -1,4 +1,11 @@
-import { View, Text, ImageBackground, TouchableOpacity, Modal } from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Modal,
+  Dimensions,
+} from 'react-native';
 import styles from './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFonts } from '../../assets/fonts/fonts';
@@ -17,6 +24,7 @@ import ShowMore from 'react-native-show-more-button';
 import { getPositionData } from '../../api/open_weather_map';
 import RecapTripCard from './recap_trip_card/RecapTripCard';
 import ProgramSection from './program_section/ProgramSection';
+import { headerScale } from '../../global/scales';
 import SummaryCard from './summary_card/SummaryCard';
 
 export default function ProductScreen({ navigation, route: { params: props } }) {
@@ -85,8 +93,7 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
       <ImageBackground
         style={styles.landing}
         source={{ uri: trip.background }}
-        resizeMode='cover'
-      >
+        resizeMode='cover'>
         <HeaderButtons
           favorite={favorites.some((favorite) => favorite === props._id)}
           onHeartPress={() => handleLike()}
@@ -104,8 +111,7 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
         presentationStyle='fullScreen'
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-        }}
-      >
+        }}>
         <View style={styles.modal}>
           <ScrollView style={styles.scrollViewModal}>
             <HeaderButtons
@@ -123,10 +129,17 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               dataSource={trip.photos.map((photo) => ({ url: photo }))}
             />
             <View style={styles.modalInfoContainer}>
-              <ModalHeader header={trip.name} country={trip.country} />
+              <ModalHeader
+                header={trip.name}
+                country={trip.country}
+              />
               <SummaryCard {...summary} />
               <IncludedNotIncludedColumns trip={trip} />
-              <LocationMap trip={trip} lat={lat} lon={lon} />
+              <LocationMap
+                trip={trip}
+                lat={lat}
+                lon={lon}
+              />
               <DescriptionSection trip={trip} />
               <ProgramSection trip={trip} />
               <Tags trip={trip} />
@@ -138,8 +151,7 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
                     params: { id: props._id },
                     merge: true,
                   })
-                }
-              >
+                }>
                 <Text style={styles.buttonTextQuotation}>Quotation request</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.programButton}>
@@ -174,8 +186,14 @@ function HeaderButtons({
           onPress={onHeartPress}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.crossBtn} onPress={onCrossPress}>
-        <Cross scale={1.2} color={iconsColor} style={styles.cross} />
+      <TouchableOpacity
+        style={styles.crossBtn}
+        onPress={onCrossPress}>
+        <Cross
+          scale={1.2}
+          color={iconsColor}
+          style={styles.cross}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -183,7 +201,9 @@ function HeaderButtons({
 
 function MoreDetailsButton({ onPress }) {
   return (
-    <TouchableOpacity style={styles.moreDetailsBtn} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.moreDetailsBtn}
+      onPress={onPress}>
       <Text style={styles.moreDetailsBtnTxt}>More details</Text>
       <Scroll />
     </TouchableOpacity>
@@ -193,7 +213,13 @@ function MoreDetailsButton({ onPress }) {
 function ModalHeader({ header, country }) {
   return (
     <View style={styles.modalInfoHeaderWrapper}>
-      <Text style={styles.modalInfoHeaderTitle}>{header}</Text>
+      <Text
+        style={{
+          ...styles.modalInfoHeaderTitle,
+          fontSize: Dimensions.get('window').width / 10,
+        }}>
+        {header}
+      </Text>
       <Text style={styles.modalInfoHeaderCountry}>{country}</Text>
       <View style={styles.divider}></View>
     </View>
@@ -203,7 +229,9 @@ function ModalHeader({ header, country }) {
 function IncludedNotIncludedColumns({ trip }) {
   return (
     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-      <View name='included' style={{ width: '50%', marginRight: 8 }}>
+      <View
+        name='included'
+        style={{ width: '50%', marginRight: 8 }}>
         <Text style={styles.smallTitle}>Included :</Text>
         <View style={{ width: '100%' }}>
           {trip.included.map((e, i) => {
@@ -212,7 +240,9 @@ function IncludedNotIncludedColumns({ trip }) {
         </View>
       </View>
 
-      <View name='nonIncluded' style={{ marginRight: 12, width: '50%' }}>
+      <View
+        name='nonIncluded'
+        style={{ marginRight: 12, width: '50%' }}>
         <Text style={styles.smallTitle}>Not included :</Text>
         <View style={{ width: '100%' }}>
           {trip.nonIncluded.map((e, i) => {
@@ -228,8 +258,7 @@ function LocationMap({ trip, lat, lon }) {
   return (
     <View
       name='localisation'
-      style={{ justifyContent: 'center', minHeight: 380, maxHeight: 380 }}
-    >
+      style={{ justifyContent: 'center', minHeight: 380, maxHeight: 380 }}>
       <Text style={styles.smallTitle}>Localisation:</Text>
       <Text>
         Departure from {trip.addressDeparture}, {trip.country}.
@@ -248,8 +277,7 @@ function LocationMap({ trip, lat, lon }) {
             longitude: lon,
             latitudeDelta: 1.5,
             longitudeDelta: 1.4,
-          }}
-        >
+          }}>
           <Marker
             coordinate={{ latitude: lat, longitude: lon }}
             pinColor='#C46B4D'
@@ -257,7 +285,7 @@ function LocationMap({ trip, lat, lon }) {
           />
         </MapView>
       ) : (
-        <View></View>
+        <></>
       )}
     </View>
   );
@@ -271,9 +299,10 @@ function DescriptionSection({ trip }) {
         height={60}
         buttonColor={'#c46b4d'}
         showMoreText='Show more'
-        showLessText='Show less'
-      >
-        <Text ellipsizeMode='tail' style={styles.inclusModal}>
+        showLessText='Show less'>
+        <Text
+          ellipsizeMode='tail'
+          style={styles.inclusModal}>
           {trip.description}
         </Text>
       </ShowMore>
@@ -287,7 +316,9 @@ function Tags({ trip }) {
       <Text style={styles.smallTitle}>Tags :</Text>
       <View style={styles.tagsContainer}>
         {trip.tags.map((data, i) => (
-          <TouchableOpacity style={styles.tagsModal} key={i}>
+          <TouchableOpacity
+            style={styles.tagsModal}
+            key={i}>
             <Text>{data}</Text>
           </TouchableOpacity>
         ))}
