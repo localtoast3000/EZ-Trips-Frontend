@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import styles from './style.css';
 
-export default function DateSection({ onValueChange = () => null }) {
+export default function DateSection({ onDatesChange = () => null }) {
   const [dateRange, setDateRange] = useState([moment(), moment().add(10, 'days')]);
 
   useEffect(() => {
-    onValueChange(dateRange);
+    onDatesChange(dateRange);
   }, [dateRange]);
 
   return (
@@ -34,7 +34,7 @@ export default function DateSection({ onValueChange = () => null }) {
 }
 
 function ValuesDisplay({ dateRange }) {
-  const diference = dateRange[1].diff(dateRange[0], 'days');
+  const difference = dateRange[1].diff(dateRange[0], 'days');
 
   return (
     <View>
@@ -49,7 +49,7 @@ function ValuesDisplay({ dateRange }) {
       <Text style={styles.durationValue}>
         Duration{' '}
         <Text style={styles.boldValue}>
-          {diference} {diference === 1 ? 'day' : 'days'}
+          {difference} {difference === 1 ? 'day' : 'days'}
         </Text>
       </Text>
     </View>

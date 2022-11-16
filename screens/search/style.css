@@ -65,17 +65,6 @@
   font-family: 'heading';
   font-size: 50px;
 }
-.travellersContainer {
-  padding: 30px 0;
-}
-.travellersLabel {
-  font-family: 'txtMedium';
-  font-size: 20px;
-}
-.travellersValue {
-  font-family: 'txtMedium';
-  font-size: 16px;
-}
 
 .button {
   height: 20px;

@@ -5,7 +5,7 @@ import styles from './style.css';
 import Arrow from '../../../components/icons/swipeleft';
 import { getData } from '../../../api/backend_request';
 
-export default function TagsSection() {
+export default function TagsSection({ onTagListChange }) {
   const [tags, setTags] = useState(false);
   const [tagListModalVisible, setTagListModalVisible] = useState(false);
   const [selectedTag, setSelectedTag] = useState('Select a tag');
@@ -20,6 +20,10 @@ export default function TagsSection() {
       } else console.log(res.error);
     })();
   }, []);
+
+  useEffect(() => {
+    onTagListChange(chosenTags);
+  }, [chosenTags]);
 
   useEffect(() => {
     if (!trips) return;

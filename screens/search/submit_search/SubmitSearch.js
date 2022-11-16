@@ -8,17 +8,9 @@ export default function SubmitSearch({ searchBody, onSubmitSuccess }) {
       style={styles.btnSearch}
       onPress={() =>
         (async () => {
-          const res = await searchData(
-            '/trips/filter/',
-            // minBudget,
-            // maxBudget,
-            // searchInput,
-            // startMonth: Number(startDate.split('-')[1]),
-            // endMonth: Number(startDate.split('-')[1]),
-            searchBody
-          );
+          const res = await searchData('/trips/filter/', searchBody);
           if (res.result) {
-            onSubmitSuccess(res.trips);
+            onSubmitSuccess(res);
           } else console.log('Search submition failed');
         })()
       }>
