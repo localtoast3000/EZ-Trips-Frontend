@@ -1,1 +1,25 @@
-
+.header {
+  font-family: 'txtMedium';
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.boldValue {
+  font-family: 'txtMedium';
+}
+.rangeDisplayWrapper {
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+.rangeDisplayTxt {
+  font-family: 'txt';
+}
+.firstRangeDisplay {
+  margin-right: 5px;
+}
+.labelsContainer {
+  flex-direction: row;
+  justify-content: space-between;
+}
+.label {
+  font-family: 'txtMedium';
+}

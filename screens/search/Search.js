@@ -13,37 +13,32 @@ import BudgetSection from './budget_section/BudgetSection';
 import DateSection from './date_section/DateSection';
 import TagsSection from './tags_section/TagsSection';
 import SubmitSearch from './submit_search/SubmitSearch';
+import CloseButton from '../../components/close_button/CloseButton';
 import { getData } from '../../api/backend_request';
 import styles from './style.css';
 import { headerScale } from '../../global/scales';
 
 export default function Search({ navigation }) {
+  const loadedFonts = loadFonts();
+  const { favorites } = useSelector(selectUser);
+  const [userMessage, setUserMessage] = useState('No search results');
   const [tripsData, setTripsData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const { user, favorites } = useSelector(selectUser);
-
-  useEffect(() => {
-    (async () => {
-      const res = await getData('/trips');
-      if (res.result) {
-        setTripsData(res.trips);
-      } else return console.log('Failed to fetch trips');
-    })();
-  }, []);
-
-  const loadedFonts = loadFonts();
+  const [searchBody, setSearchBody] = useState({});
   if (!loadedFonts) return <></>;
 
   return (
     <>
       <ScrollView style={styles.mainContainer}>
         <Text style={{ ...styles.header, ...headerScale }}>Search</Text>
-        <SearchInput onChange={(value) => console.log(value)} />
+        <SearchInput
+          onSearchResultsResived={(searchResults) => setTripsData(searchResults)}
+        />
         <ResultsAndFilterBtn
           tripsData={tripsData}
           onFilterBtnPress={() => setModalVisible(!modalVisible)}
         />
-        {tripsData ? (
+        {tripsData && tripsData.length > 0 ? (
           tripsData.map((trip, i) => {
             return (
               <TouchableOpacity
@@ -76,31 +71,24 @@ export default function Search({ navigation }) {
             );
           })
         ) : (
-          <></>
+          <View>
+            <Text style={{ fontFamily: 'txt', fontSize: 16 }}>{userMessage}</Text>
+          </View>
         )}
         <Modal
           transparent={true}
           animationType='slide'
           visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.modal}>
-            <FilterModalHeader onClose={() => setModalVisible(!modalVisible)} />
-            <ScrollView
-              style={{
-                padding: 5,
-                backgroundColor: '#F2F3F5',
-                marginTop: 10,
-                padding: 25,
-                height: '100%',
-              }}>
+          onRequestClose={() => setModalVisible(!modalVisible)}
+          statusBarTranslucent={true}>
+          <View style={styles.modalContentContainer}>
+            <ScrollView>
+              <FilterModalHeader onClose={() => setModalVisible(!modalVisible)} />
               <BudgetSection />
-              <TravelerQtySection onValueChange={(count) => console.log(count)} />
-              <DateSection />
+              <TravelerQtySection onValueChange={() => null} />
+              <DateSection onValueChange={(dates) => console.log()} />
               <TagsSection trips={tripsData} />
               <SubmitSearch />
-              <View style={{ height: 400 }}></View>
             </ScrollView>
           </View>
         </Modal>
@@ -113,19 +101,12 @@ export default function Search({ navigation }) {
 
 function FilterModalHeader({ onClose }) {
   return (
-    <View
-      id='headerFilter'
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}>
-      <Text style={{ fontFamily: 'txt', fontSize: 24 }}>Filters</Text>
-      <AntDesign
-        name='close'
-        size={30}
-        color='black'
+    <View style={styles.filterHeaderContainer}>
+      <Text style={styles.filterHeader}>Filters</Text>
+      <CloseButton
         onPress={onClose}
+        iconColor={'black'}
+        iconScale={0.5}
       />
     </View>
   );
@@ -135,6 +116,9 @@ function TravelerQtySection({ onValueChange }) {
   return (
     <HorizontalCounter
       label='Travellers'
+      labelStyles={styles.travellersLabel}
+      valueStyle={styles.travellersValue}
+      containerStyles={styles.travellersContainer}
       onValueChange={onValueChange}
       initalValue={1}
       notSmallerThanInital={true}

@@ -1,12 +1,14 @@
 .btnSearch {
+  margin-top: 40px;
+  width: 100%;
   align-self: center;
-  margin-top: 100;
-  width: 50%;
-  height: 30;
-  border-radius: 3px;
-  border-color: black;
-  border-width: 1px;
+  background-color: black;
   align-items: center;
-  border-radius: 10px;
   justify-content: center;
+  height: 50px;
+  border-radius: 10px;
+}
+.text {
+  color: white;
+  font-family: 'txtMedium';
 }

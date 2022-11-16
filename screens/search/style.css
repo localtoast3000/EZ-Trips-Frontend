@@ -48,24 +48,34 @@
   padding: 0 20px 20px 0;
 }
 
-/*--------------------------------------------- MODAL -----------------------------------------*/
-
-.modal {
+.modalContentContainer {
   height: 100%;
   width: 100%;
   background-color: white;
-  position: absolute;
-  top: 18%;
-  padding: 20px;
+  padding: 50px 30px;
 }
 
-.filterText {
-  font-family: 'txt';
-  font-size: 18px;
-  margin-bottom: 5;
+.filterHeaderContainer {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
-
-/*--------------- BUTTONS -------------*/
+.filterHeader {
+  font-family: 'heading';
+  font-size: 50px;
+}
+.travellersContainer {
+  padding: 30px 0;
+}
+.travellersLabel {
+  font-family: 'txtMedium';
+  font-size: 20px;
+}
+.travellersValue {
+  font-family: 'txtMedium';
+  font-size: 16px;
+}
 
 .button {
   height: 20px;

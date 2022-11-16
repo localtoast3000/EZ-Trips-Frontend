@@ -7,6 +7,8 @@ export default function HorizontalCounter({
   initalValue = 0,
   notSmallerThanInital = false,
   noNegativeNumbers = false,
+  labelStyles = {},
+  valueStyle = {},
   onValueChange = () => null,
   containerStyles,
 }) {
@@ -18,7 +20,7 @@ export default function HorizontalCounter({
 
   return (
     <View style={{ ...styles.mainContainer, ...containerStyles }}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={{ ...styles.label, ...labelStyles }}>{label}</Text>
       <View style={styles.btnsWrapper}>
         <TouchableOpacity
           style={{
@@ -31,19 +33,17 @@ export default function HorizontalCounter({
               if (notSmallerThanInital) return value > initalValue ? value - 1 : value;
               value - 1;
             })
-          }
-        >
+          }>
           <Text style={styles.btnTxt}>-</Text>
         </TouchableOpacity>
-        <Text style={styles.value}>{value}</Text>
+        <Text style={{ ...styles.value, ...valueStyle }}>{value}</Text>
         <TouchableOpacity
           style={{
             ...styles.countButton,
             marginLeft: 20,
           }}
-          onPress={() => setValue(() => value + 1)}
-        >
-          <Text style={styles.btnTxt}>+</Text>
+          onPress={() => setValue(() => value + 1)}>
+          <Text style={{ ...styles.btnTxt }}>+</Text>
         </TouchableOpacity>
       </View>
     </View>
