@@ -10,7 +10,7 @@ export default function SubmitSearch({ searchBody, onSubmitSuccess }) {
         (async () => {
           const res = await searchData('/trips/filter/', searchBody);
           if (res.result) {
-            onSubmitSuccess(res);
+            onSubmitSuccess(res.trips);
           } else console.log('Search submition failed');
         })()
       }>

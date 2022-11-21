@@ -24,7 +24,6 @@ import ShowMore from 'react-native-show-more-button';
 import { getPositionData } from '../../api/open_weather_map';
 import RecapTripCard from './recap_trip_card/RecapTripCard';
 import ProgramSection from './program_section/ProgramSection';
-import { headerScale } from '../../global/scales';
 import SummaryCard from './summary_card/SummaryCard';
 
 export default function ProductScreen({ navigation, route: { params: props } }) {

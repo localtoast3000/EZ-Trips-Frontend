@@ -4,7 +4,6 @@ import { loadFonts } from '../../assets/fonts/fonts';
 import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import HorizontalScrollView from '../../components/horzontal_scroll_view/HorizontalScrollView';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Trip from '../../components/trip/trip';
 import Quote from './quote/Quote';
 import styles from './style.css';
 import { getData } from '../../api/backend_request';
@@ -42,6 +41,8 @@ export default function MyQuotations() {
       } else console.log('Failed to fetch orders');
     })();
   }, []);
+
+  if (!loadedFonts) return <></>;
 
   let sentDisplay = <Text style={{ fontFamily: 'txt' }}>No quotation asked yet.</Text>;
 
@@ -109,8 +110,6 @@ export default function MyQuotations() {
       );
     });
   }
-
-  if (!loadedFonts) return <></>;
 
   return (
     <>

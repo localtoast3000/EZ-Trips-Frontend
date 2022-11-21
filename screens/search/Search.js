@@ -31,6 +31,16 @@ export default function Search({ navigation }) {
     tags: null,
   });
 
+  useEffect(() => {
+    if (tripsData.length === 0) return;
+    const result = tripsData
+      .map((trip) => trip.travelPeriod)
+      .flat()
+      .sort();
+
+    inspect(result);
+  }, [tripsData]);
+
   if (!loadedFonts) return <></>;
 
   return (
