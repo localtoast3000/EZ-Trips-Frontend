@@ -6,12 +6,12 @@ import { selectTheme } from './reducers/theme';
 import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 import NavigationStack from './NavigationStack';
-import { LogBox } from 'react-native';
+import { LogBox, Modal } from 'react-native';
 function App() {
   const theme = useSelector(selectTheme);
   LogBox.ignoreAllLogs();
-  console.disableYellowBow=true;
-  
+  console.disableYellowBow = true;
+
   return (
     <NavigationContainer theme={theme === 'dark' ? darkTheme : lightTheme}>
       <PersistGate persistor={persistor}>

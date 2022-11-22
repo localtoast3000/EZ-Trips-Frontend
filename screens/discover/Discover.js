@@ -121,9 +121,7 @@ function SignUpLoginBtn({ navigation }) {
   return (
     <TouchableOpacity
       style={styles.signUpLoginBtn}
-      onPress={() =>
-        navigation.navigate({ name: 'OnBoarding', params: { lastSlide: true } })
-      }>
+      onPress={() => navigation.navigate({ name: 'OnBoarding' })}>
       <Text style={{ ...styles.signUpLoginBtnTxt, ...styles.text }}>Sign-up / Login</Text>
     </TouchableOpacity>
   );

@@ -22,7 +22,6 @@ export default function MyQuotations() {
     (async () => {
       const res = await getData('/orders/' + user.token);
       if (res.result) {
-        inspect(res);
         const totalRequests = [];
         const totalQuotations = [];
         for (let order of res.data) {

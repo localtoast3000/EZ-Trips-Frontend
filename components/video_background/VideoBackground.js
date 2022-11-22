@@ -1,7 +1,12 @@
 import { View, Dimensions } from 'react-native';
 import { Video } from 'expo-av';
 
-export default function VideoBackground({ onLoad, source, layerOpacity, children }) {
+export default function VideoBackground({
+  source,
+  layerOpacity,
+  children,
+  onStatusChange = () => null,
+}) {
   return (
     <View style={{ flex: 1, width: '100%' }}>
       <Video
@@ -16,6 +21,7 @@ export default function VideoBackground({ onLoad, source, layerOpacity, children
         resizeMode='cover'
         isLooping
         shouldPlay
+        onPlaybackStatusUpdate={onStatusChange}
       />
       <View
         style={{

@@ -34,10 +34,6 @@ export default function Quotation_Request({ navigation, route: { params: props }
     })();
   }, []);
 
-  useEffect(() => {
-    inspect(trip);
-  }, [trip]);
-
   const handleconfirmButton = () => {
     if (trip) {
       (async () => {

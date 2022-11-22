@@ -13,8 +13,9 @@ import SignupLoginSlide from './signup_login_slide/SignupLoginSlide';
 import Logo from '../../components/logo/Logo';
 import VideoBackground from '../../components/video_background/VideoBackground';
 import canyonVideo from '../../assets/videos/Canyon.mp4';
+import { inspect } from '../../lib/inspector';
 
-export default function OnBoarding({ navigation, route: { params } }) {
+export default function OnBoarding({ navigation }) {
   const loadedFonts = loadFonts();
   const { onBoarding } = useTheme();
   const animationSpeed = 250;
@@ -22,6 +23,7 @@ export default function OnBoarding({ navigation, route: { params } }) {
   const [direction, setDirection] = useState({ direction: false });
   const slides = [TitleSlide, SecondSlide, ThirdSlide, FourthSlide, SignupLoginSlide];
   const [animating, setAnimating] = useState(false);
+  const [videoIsPlaying, setVideoIsPlaying] = useState(false);
 
   useEffect(() => {
     if (animating) return;
@@ -44,65 +46,68 @@ export default function OnBoarding({ navigation, route: { params } }) {
     <View style={styles.container}>
       <VideoBackground
         source={canyonVideo}
-        layerOpacity={0.5}>
-        {(absoluteStyle) => (
-          <SwipeContainer
-            style={{ ...absoluteStyle, ...styles.swipeContainer }}
-            onSwipe={({ direction }) => setDirection(direction)}>
-            <FadeContainer
-              isVisible={progress === slides.length ? false : true}
-              speed={animationSpeed}>
-              <ProgressBar
-                slideQty={slides.length}
-                currentSlide={progress}
-                animationSpeed={animationSpeed}
-              />
-            </FadeContainer>
-            <HorizontalSlideContainer
-              speed={animationSpeed}
-              direction={direction}
-              currentSlide={progress}
-              slideLength={slides.length}
-              disableAnimation={animating ? true : false}
-              onAnimation={() => setAnimating(true)}>
-              {slides.map((Slide, i) => {
-                return (
-                  <View
-                    key={i}
-                    style={{ width: '100%' }}>
-                    <Slide
-                      isVisible={progress === i + 1 ? true : false}
-                      direction={direction}
-                      progressPos={progress}
-                      slideLength={slides.length}
-                      navigation={navigation}
-                    />
-                  </View>
-                );
-              })}
-            </HorizontalSlideContainer>
-            <View style={styles.bottomContainer}>
-              <View style={styles.paddingBox}></View>
-              <FadeContainer
-                isVisible={progress > 1 ? false : true}
-                speed={animationSpeed}>
-                <Text style={{ ...styles.welcomeTxt, color: onBoarding.welcomeTxt }}>
-                  Welcome
-                </Text>
-              </FadeContainer>
-              <PulsingContainer
-                style={styles.paddingBox}
-                isVisible={progress < slides.length ? true : false}
-                speed={animationSpeed}>
-                <TouchableOpacity
-                  onPress={() => setDirection({ direction: 'left' })}
-                  activeOpacity={1}>
-                  <SwipeArrow />
-                </TouchableOpacity>
-              </PulsingContainer>
-            </View>
-          </SwipeContainer>
-        )}
+        layerOpacity={videoIsPlaying ? 0.5 : 1}
+        onStatusChange={(status) => setVideoIsPlaying(status.isPlaying)}>
+        {videoIsPlaying
+          ? (absoluteStyle) => (
+              <SwipeContainer
+                style={{ ...absoluteStyle, ...styles.swipeContainer }}
+                onSwipe={({ direction }) => setDirection(direction)}>
+                <FadeContainer
+                  isVisible={progress === slides.length ? false : true}
+                  speed={animationSpeed}>
+                  <ProgressBar
+                    slideQty={slides.length}
+                    currentSlide={progress}
+                    animationSpeed={animationSpeed}
+                  />
+                </FadeContainer>
+                <HorizontalSlideContainer
+                  speed={animationSpeed}
+                  direction={direction}
+                  currentSlide={progress}
+                  slideLength={slides.length}
+                  disableAnimation={animating ? true : false}
+                  onAnimation={() => setAnimating(true)}>
+                  {slides.map((Slide, i) => {
+                    return (
+                      <View
+                        key={i}
+                        style={{ width: '100%' }}>
+                        <Slide
+                          isVisible={progress === i + 1 ? true : false}
+                          direction={direction}
+                          progressPos={progress}
+                          slideLength={slides.length}
+                          navigation={navigation}
+                        />
+                      </View>
+                    );
+                  })}
+                </HorizontalSlideContainer>
+                <View style={styles.bottomContainer}>
+                  <View style={styles.paddingBox}></View>
+                  <FadeContainer
+                    isVisible={progress > 1 ? false : true}
+                    speed={animationSpeed}>
+                    <Text style={{ ...styles.welcomeTxt, color: onBoarding.welcomeTxt }}>
+                      Welcome
+                    </Text>
+                  </FadeContainer>
+                  <PulsingContainer
+                    style={styles.paddingBox}
+                    isVisible={progress < slides.length ? true : false}
+                    speed={animationSpeed}>
+                    <TouchableOpacity
+                      onPress={() => setDirection({ direction: 'left' })}
+                      activeOpacity={1}>
+                      <SwipeArrow />
+                    </TouchableOpacity>
+                  </PulsingContainer>
+                </View>
+              </SwipeContainer>
+            )
+          : () => <></>}
       </VideoBackground>
     </View>
   );

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import styles from './style.css';
 import BackgroundImageLayer from '../../components/background_image_layer/BackgroundImageLayer';
 import mountImg from '../../assets/images/Mountain.png';
-import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import AnimatedProgressPath from './animated_progress_path/AnimatedProgressPath';
 import { useTheme } from '@react-navigation/native';
 import { loadFonts } from '../../assets/fonts/fonts';
@@ -34,7 +33,7 @@ export default function NexStep({ navigation, route: { params: data } }) {
         style={{
           ...styles.imageBackground,
           width: Dimensions.get('window').width * 1.25,
-          height: Dimensions.get('window').height,
+          height: Dimensions.get('window').height + 30,
         }}
       />
       <Text style={styles.title}>Next Steps</Text>
@@ -47,7 +46,7 @@ export default function NexStep({ navigation, route: { params: data } }) {
           containerScale={Dimensions.get('window').width / 261}
           containerStyle={{
             ...styles.animatedPathViewBox,
-            top: Dimensions.get('window').height / 6.5,
+            top: Dimensions.get('window').height / 5.4,
           }}
           pathColor={nextStep.animatedPath}
           pointerColor={nextStep.animatedPointer}
@@ -56,7 +55,6 @@ export default function NexStep({ navigation, route: { params: data } }) {
         />
         {stepInfoCollection(currentStep, incrementStep)[currentStep - 1]}
       </View>
-      <BottomToolbar />
     </>
   );
 }
@@ -77,7 +75,7 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        top: Dimensions.get('window').height / 40,
+        top: Dimensions.get('window').height / 17,
         transform: [
           { scale: Dimensions.get('window').width / 370 },
           { translateX: -40 },
@@ -95,7 +93,7 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        top: Dimensions.get('window').height / 40,
+        top: Dimensions.get('window').height / 18,
         transform: [
           { scale: Dimensions.get('window').width / 370 },
           { translateX: 90 },
@@ -113,7 +111,7 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 140,
-        top: Dimensions.get('window').height / 40,
+        top: Dimensions.get('window').height / 18,
         transform: [
           { scale: Dimensions.get('window').width / 370 },
           { translateX: -70 },
@@ -131,7 +129,7 @@ function stepInfoCollection(currentStep, incrementStep) {
       containerStyle={{
         backgroundColor: nextStep.stepInfoBg,
         width: 160,
-        top: Dimensions.get('window').height / 40,
+        top: Dimensions.get('window').height / 18,
         transform: [
           { scale: Dimensions.get('window').width / 370 },
           { translateX: 60 },
