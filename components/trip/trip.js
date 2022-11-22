@@ -50,20 +50,23 @@ export default function Trip({
     <ImageBackground
       imageStyle={{ borderRadius: 15 }}
       source={{ uri: background }}
-      style={{ ...styles.imageBackground, ...containerStyles }}
-    >
+      style={{ ...styles.imageBackground, ...containerStyles }}>
       <View style={styles.imageLayer}></View>
       <View style={{ ...styles.topInfos, ...topElementsContainerStyles }}>
         <Text style={{ ...styles.country, ...countryStyles }}>{country}</Text>
-        <AntDesign
-          onPress={() => handleLike()}
-          style={{ ...styles.heart, ...heartStyles }}
-          name='heart'
-          size={18}
-          color={
-            isFavorite ? '#F5612F' : isFavorite === undefined ? 'transparent' : 'white'
-          }
-        />
+        {user ? (
+          <AntDesign
+            onPress={() => handleLike()}
+            style={{ ...styles.heart, ...heartStyles }}
+            name='heart'
+            size={18}
+            color={
+              isFavorite ? '#F5612F' : isFavorite === undefined ? 'transparent' : 'white'
+            }
+          />
+        ) : (
+          <></>
+        )}
       </View>
       <Text style={{ ...styles.title, ...titleStyles }}>{name}</Text>
       <View style={styles.bottomInfo}>

@@ -1,16 +1,8 @@
-import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Modal,
-  Dimensions,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import styles from './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFonts } from '../../assets/fonts/fonts';
 import { useState, useEffect } from 'react';
-import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import { getData, postData, deleteData } from '../../api/backend_request';
 import { ScrollView } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps';
@@ -19,12 +11,14 @@ import Scroll from '../../components/icons/scrollDown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { addFavorites, deleteFavorite, selectUser } from '../../reducers/user';
 import { getMonthName } from '../../lib/helpers';
-import Slideshow from 'react-native-image-slider-show';
+import Slideshow from '../../components/slide_show/SideShow';
 import ShowMore from 'react-native-show-more-button';
 import { getPositionData } from '../../api/open_weather_map';
 import RecapTripCard from './recap_trip_card/RecapTripCard';
 import ProgramSection from './program_section/ProgramSection';
 import SummaryCard from './summary_card/SummaryCard';
+import BackgroundImageLayer from '../../components/background_image_layer/BackgroundImageLayer';
+import { inspect } from '../../lib/inspector';
 
 export default function ProductScreen({ navigation, route: { params: props } }) {
   const loadedFonts = loadFonts();
@@ -79,6 +73,7 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
 
   const summary = {
     name: trip.name,
+    country: trip.country,
     price: trip.program[0].price,
     photos: trip.photos,
     minDay: trip.program[0].nbday,
@@ -89,20 +84,24 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
 
   return (
     <View style={styles.scrollView}>
-      <ImageBackground
+      <BackgroundImageLayer
         style={styles.landing}
         source={{ uri: trip.background }}
-        resizeMode='cover'>
-        <HeaderButtons
-          favorite={favorites.some((favorite) => favorite === props._id)}
-          onHeartPress={() => handleLike()}
-          onCrossPress={() => navigation.navigate('Discover')}
-          heartActiveColor='#F5612F'
-          iconsColor='white'
-        />
-        <RecapTripCard {...summary} />
-        <MoreDetailsButton onPress={() => setModalVisible(!modalVisible)} />
-      </ImageBackground>
+        layerOpacity={0.5}>
+        {(absoluteStyle) => (
+          <View style={{ ...absoluteStyle, ...styles.landing }}>
+            <HeaderButtons
+              favorite={favorites.some((favorite) => favorite === props._id)}
+              onHeartPress={() => handleLike()}
+              onCrossPress={() => navigation.goBack()}
+              heartActiveColor='#F5612F'
+              iconsColor='white'
+            />
+            <RecapTripCard {...summary} />
+            <MoreDetailsButton onPress={() => setModalVisible(!modalVisible)} />
+          </View>
+        )}
+      </BackgroundImageLayer>
       <Modal
         statusBarTranslucent={true}
         animationType='slide'
@@ -126,6 +125,7 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               height={250}
               style={styles.caroussel}
               dataSource={trip.photos.map((photo) => ({ url: photo }))}
+              overlay={true}
             />
             <View style={styles.modalInfoContainer}>
               <ModalHeader
@@ -142,25 +142,29 @@ export default function ProductScreen({ navigation, route: { params: props } }) 
               <DescriptionSection trip={trip} />
               <ProgramSection trip={trip} />
               <Tags trip={trip} />
-              <TouchableOpacity
-                style={styles.quotationButton}
-                onPress={() =>
-                  navigation.navigate({
-                    name: 'Quotation_Request',
-                    params: { id: props._id },
-                    merge: true,
-                  })
-                }>
-                <Text style={styles.buttonTextQuotation}>Quotation request</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.programButton}>
-                <Text style={styles.buttonTextProgram}>Download program (PDF)</Text>
-              </TouchableOpacity>
-              <View style={{ height: 90 }}></View>
+              {user ? (
+                <>
+                  <TouchableOpacity
+                    style={styles.quotationButton}
+                    onPress={() =>
+                      navigation.navigate({
+                        name: 'Quotation_Request',
+                        params: { id: props._id },
+                        merge: true,
+                      })
+                    }>
+                    <Text style={styles.buttonTextQuotation}>Quotation request</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.programButton}>
+                    <Text style={styles.buttonTextProgram}>Download program (PDF)</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <></>
+              )}
             </View>
           </ScrollView>
         </View>
-        <BottomToolbar />
       </Modal>
     </View>
   );
@@ -174,16 +178,21 @@ function HeaderButtons({
   iconsColor,
   favorite,
 }) {
+  const { user } = useSelector(selectUser);
   return (
     <View style={{ ...styles.headerButtons, ...containerStyle }}>
       <TouchableOpacity style={styles.heartBtn}>
-        <AntDesign
-          name='heart'
-          size={25}
-          borderOuterOutlined='black'
-          color={favorite ? heartActiveColor : iconsColor}
-          onPress={onHeartPress}
-        />
+        {user ? (
+          <AntDesign
+            name='heart'
+            size={25}
+            borderOuterOutlined='black'
+            color={favorite ? heartActiveColor : iconsColor}
+            onPress={onHeartPress}
+          />
+        ) : (
+          <></>
+        )}
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.crossBtn}

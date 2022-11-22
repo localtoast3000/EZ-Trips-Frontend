@@ -15,6 +15,7 @@ export default function Quote({
   end,
   start,
   program,
+  status,
   onPress = () => null,
   ...props
 }) {
@@ -31,14 +32,15 @@ export default function Quote({
           params: { id },
           merge: true,
         })
-      }
-    >
+      }>
       <ImageBackground
         imageStyle={{ borderRadius: 15 }}
         source={{ uri: background }}
-        style={styles.imageBackground}
-      >
-        <QuotationStatusMsg status='recived' travelerQty={travelerQty} />
+        style={styles.imageBackground}>
+        <QuotationStatusMsg
+          status={status}
+          travelerQty={travelerQty}
+        />
         <View style={styles.imageLayer}></View>
         <Text style={styles.country}>{country}</Text>
         <Text style={styles.title}>{name}</Text>
@@ -59,9 +61,7 @@ function QuotationStatusMsg({ status, travelerQty }) {
   return (
     <View style={styles.quotationStatusMsgContainer}>
       <Text style={{ ...styles.quoteStatus, color: 'white' }}>
-        {status === 'requested'
-          ? 'Pending quotation request for '
-          : 'Quotation recived for'}
+        {status === 'Requested' ? 'Pending response for ' : 'Quotation recived for '}
         <Text style={styles.numberOfPeople}>
           {travelerQty} {travelerQty === 1 ? 'person' : 'people'}
         </Text>

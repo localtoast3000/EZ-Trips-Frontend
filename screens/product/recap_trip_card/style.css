@@ -1,26 +1,41 @@
-.recapTripCard {
-  flex-direction: column;
-  justify-content: center;
-  background-color: #ffffffcc;
+.container {
   border-radius: 15px;
-  padding: 15px;
   margin-top: auto;
+  align-self: center;
+  background-color: #ffffff94;
+  width: 100%;
+  max-width: 100%;
+  height: 190px;
+  padding: 20px;
 }
-.recapTriptitle {
+.country {
+  color: black;
+  font-family: 'txtMedium';
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+.title {
   font-family: 'heading';
+  color: black;
   font-size: 30px;
 }
-.recapTripcountry {
+.bottomInfo {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  width: 100%;
+}
+.days {
+  color: black;
   font-family: 'txtMedium';
-  font-size: 16px;
-  padding: 10px 0 5px 0;
-  color: #8d8d8d;
+  padding-right: 20px;
 }
-.recapTripDays {
-  font-family: 'txt';
-  font-size: 16px;
+.price {
+  color: black;
+  font-family: 'txtMedium';
 }
-.recapTripPrice {
-  font-family: 'txt';
-  font-size: 16px;
+.boldText {
+  color: black;
+  font-family: 'txtBold';
 }

@@ -23,11 +23,13 @@ export default function Discover({ navigation }) {
       if (res.result) setTripsData(res.trips);
       else console.log('Failed to fetch trips');
     })();
-    (async () => {
-      const res = await getData('/users/idLike/' + user.token);
-      if (res.result) dispatch(setFavorites(res.tripsLiked));
-      else console.log('Failed to fetch user likes');
-    })();
+
+    user &&
+      (async () => {
+        const res = await getData('/users/idLike/' + user.token);
+        if (res.result) dispatch(setFavorites(res.tripsLiked));
+        else console.log('Failed to fetch user likes');
+      })();
   }, []);
 
   if (!loadedFonts) return <></>;
@@ -36,7 +38,10 @@ export default function Discover({ navigation }) {
     <>
       <ScrollView style={styles.mainContainer}>
         <View style={styles.header}>
-          <Text style={{ ...styles.title, ...headerScale }}>Discover</Text>
+          <View style={styles.headerAndLoginSignupBtnWrapper}>
+            <Text style={{ ...styles.title, ...headerScale }}>Discover</Text>
+            {!user ? <SignUpLoginBtn navigation={navigation} /> : <></>}
+          </View>
           <Text style={styles.text}>Choose your next adventure.</Text>
           <View style={styles.border}></View>
         </View>
@@ -74,9 +79,9 @@ export default function Discover({ navigation }) {
             );
           })}
         </View>
-        <View style={{ height: 100 }}></View>
+        {user ? <View style={{ height: 100 }}></View> : <></>}
       </ScrollView>
-      <BottomToolbar />
+      {user ? <BottomToolbar /> : <></>}
     </>
   );
 }
@@ -109,5 +114,17 @@ function Highlight() {
         </View>
       </View>
     </View>
+  );
+}
+
+function SignUpLoginBtn({ navigation }) {
+  return (
+    <TouchableOpacity
+      style={styles.signUpLoginBtn}
+      onPress={() =>
+        navigation.navigate({ name: 'OnBoarding', params: { lastSlide: true } })
+      }>
+      <Text style={{ ...styles.signUpLoginBtnTxt, ...styles.text }}>Sign-up / Login</Text>
+    </TouchableOpacity>
   );
 }

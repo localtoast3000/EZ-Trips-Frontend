@@ -1,7 +1,11 @@
 .mainContainer {
   padding: 40px 15px 0 15px;
 }
-
+.header {
+  font-family: 'heading';
+  margin-bottom: 10px;
+  margin-right: auto;
+}
 .tripCardContainer {
   margin-right: 20px;
   width: 100%;

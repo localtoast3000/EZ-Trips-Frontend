@@ -11,13 +11,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment';
 import Cross from '../../components/icons/cross';
 import DateRangePicker from '../../components/form_elements/date-range-picker/DateRangePicker';
-import { serverURL } from '../../api/backend_request';
 import HorizontalCounter from '../../components/form_elements/horizontal_counter/HorizontalCounter';
+import { selectUser } from '../../reducers/user';
+import { postData, getData } from '../../api/backend_request';
+import { inspect } from '../../lib/inspector';
 
 export default function Quotation_Request({ navigation, route: { params: props } }) {
   const loadedFonts = loadFonts();
   const { theme } = useTheme();
-  const TOKEN = useSelector((state) => state.user.value.token);
+  const { user } = useSelector(selectUser);
   const [modalVisible, setModalVisible] = useState(false);
   const [nbTravelers, setnbTravelers] = useState(1);
   const [selectedRange, setRange] = useState({});
@@ -26,41 +28,36 @@ export default function Quotation_Request({ navigation, route: { params: props }
   console.disableYellowBox = true;
 
   useEffect(() => {
-    //fetch le trip grâce à l'id reçu en props
-    fetch(`${serverURL}/trips/tripById/${props.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          setTrip(data.trip);
-        }
-      });
+    (async () => {
+      const res = await getData('/trips/tripById/' + props.id);
+      if (res.result) setTrip(res.trip);
+    })();
   }, []);
+
+  useEffect(() => {
+    inspect(trip);
+  }, [trip]);
 
   const handleconfirmButton = () => {
     if (trip) {
-      fetch(`${serverURL}/orders`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user: TOKEN,
-          trip: '6358edc49ced89a7026c3017',
+      (async () => {
+        const res = await postData('/orders', {
+          user: user.token,
+          trip: props.id,
           start: selectedRange.firstDate,
           end: selectedRange.secondDate,
           nbDays: getnbDays(selectedRange.firstDate, selectedRange.secondDate),
           nbTravelers: nbTravelers,
           comments: value,
           totalPrice: trip.program[0].price * nbTravelers,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.result) {
-            navigation.navigate({ name: 'NextStep', params: data });
-          } else {
-            console.log('no data result', data.error);
-            setModalVisible(true);
-          }
         });
+        if (res.result) {
+          navigation.navigate({ name: 'NextStep', params: res });
+        } else {
+          console.log('Failed to fetch orders', res.error);
+          setModalVisible(true);
+        }
+      })();
     }
   };
 
@@ -128,7 +125,7 @@ export default function Quotation_Request({ navigation, route: { params: props }
               <View></View>
             )}
             <TouchableOpacity
-              style={{ ...styles.buttonConfirm, backgroundColor: theme.pa1 }}
+              style={{ ...styles.buttonConfirm }}
               onPress={handleconfirmButton}>
               <Text style={styles.confirmBtnTxt}>Confirm</Text>
             </TouchableOpacity>

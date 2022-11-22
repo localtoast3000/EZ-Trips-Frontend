@@ -13,7 +13,7 @@ export default function Profile({ navigation }) {
   const loadedFonts = loadFonts();
   const [emailVal, setEmailVal] = useState(user.email);
   const [birthDateVal, setBirthDateVal] = useState('26/02/1991');
-  const [countryVal, setCountryVal] = useState('Belgium');
+  const [countryVal, setCountryVal] = useState('France');
   const [emailEdit, setEmailEdit] = useState(false);
   const [birthDateEdit, setBirthDateEdit] = useState(false);
   const [countryEdit, setCountryEdit] = useState(false);
@@ -31,26 +31,30 @@ export default function Profile({ navigation }) {
         onKeyboardOpen={() => setKeyboardOpen(true)}
         onKeyboardClose={() => setKeyboardOpen(false)}>
         <View style={styles.header}>
-          <Text style={styles.username}>{user ? `${user.firstName} ${user.lastName}` : ''}</Text>
+          <Text style={styles.username}>
+            {user ? `${user.firstName} ${user.lastName}` : ''}
+          </Text>
           <LogoutBtn navigation={navigation} />
         </View>
 
         <View style={{ ...styles.photoContainer, bottom: keyboardOpen ? 200 : 0 }}>
           <Image
             style={styles.photo}
-            source={{
-              uri: 'https://eijwvqaycbm.exactdn.com/wp-content/uploads/2012/09/Van-Damme-chien-1200x1799.jpg',
-            }}
+            source={require('../../assets/images/default_ID.png')}
           />
           <TouchableOpacity
             onPress={() => (countryEdit ? setImageEdit(false) : setImageEdit(true))}
-            style={{ ...styles.editBtn, ...styles.imageEdit, transform: [{ translateX: 80 }, { translateY: 80 }] }}>
+            style={{
+              ...styles.editBtn,
+              ...styles.imageEdit,
+              transform: [{ translateX: 80 }, { translateY: 80 }],
+            }}>
             <Pencil style={styles.pencil} />
           </TouchableOpacity>
         </View>
         <View style={styles.userInfo}>
           <View style={styles.emailWrapper}>
-            {!emailEdit ? (
+            {!emailEdit && emailVal.length > 0 ? (
               <Text style={styles.email}>{emailVal}</Text>
             ) : (
               <TextInput
@@ -58,6 +62,7 @@ export default function Profile({ navigation }) {
                 style={{ ...styles.email, ...styles.textInput }}
                 value={emailVal}
                 onChangeText={setEmailVal}
+                placeholder='Email'
               />
             )}
             <View style={styles.btnWrapper}>
@@ -69,7 +74,7 @@ export default function Profile({ navigation }) {
             </View>
           </View>
           <View style={styles.birthDateWrapper}>
-            {!birthDateEdit ? (
+            {!birthDateEdit && birthDateVal.length > 0 ? (
               <Text style={styles.birthDate}>{birthDateVal}</Text>
             ) : (
               <TextInput
@@ -77,18 +82,21 @@ export default function Profile({ navigation }) {
                 style={{ ...styles.birthDate, ...styles.textInput }}
                 value={birthDateVal}
                 onChangeText={setBirthDateVal}
+                placeholder='Date of birth'
               />
             )}
             <View style={styles.btnWrapper}>
               <TouchableOpacity
                 style={styles.editBtn}
-                onPress={() => (birthDateEdit ? setBirthDateEdit(false) : setBirthDateEdit(true))}>
+                onPress={() =>
+                  birthDateEdit ? setBirthDateEdit(false) : setBirthDateEdit(true)
+                }>
                 <Pencil style={styles.pencil} />
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.countryWrapper}>
-            {!countryEdit ? (
+            {!countryEdit && countryVal.length > 0 ? (
               <Text style={styles.country}>{countryVal}</Text>
             ) : (
               <TextInput
@@ -96,12 +104,15 @@ export default function Profile({ navigation }) {
                 style={{ ...styles.country, ...styles.textInput }}
                 value={countryVal}
                 onChangeText={setCountryVal}
+                placeholder='Country'
               />
             )}
             <View style={styles.btnWrapper}>
               <TouchableOpacity
                 style={styles.editBtn}
-                onPress={() => (countryEdit ? setCountryEdit(false) : setCountryEdit(true))}>
+                onPress={() =>
+                  countryEdit ? setCountryEdit(false) : setCountryEdit(true)
+                }>
                 <Pencil style={styles.pencil} />
               </TouchableOpacity>
             </View>
@@ -117,7 +128,9 @@ export default function Profile({ navigation }) {
 
 function ViewDocumentsBtn({ navigation }) {
   return (
-    <TouchableOpacity style={styles.documentBtn} onPress={() => navigation.navigate('MyDocuments')}>
+    <TouchableOpacity
+      style={styles.documentBtn}
+      onPress={() => navigation.navigate('MyDocuments')}>
       <Text style={styles.documentBtnTxt}>View documents</Text>
     </TouchableOpacity>
   );

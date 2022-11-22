@@ -9,10 +9,16 @@
   flex: 1;
   flex-direction: column;
 }
-
+.headerAndLoginSignupBtnWrapper {
+  flex-direction: row;
+}
+.text {
+  font-family: 'txt';
+}
 .title {
   font-family: 'heading';
   margin-bottom: 10px;
+  margin-right: auto;
 }
 
 .border {

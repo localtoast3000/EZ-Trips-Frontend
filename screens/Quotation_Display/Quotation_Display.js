@@ -1,5 +1,5 @@
 import { ScrollView, View, Text, TouchableOpacity, Linking } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   convertibleStartDate,
   convertibleEndDate,
@@ -11,7 +11,8 @@ import BottomToolbar from '../../components/bottom-toolbar/bottom-toolbar';
 import Contact from '../../components/icons/contact';
 import styles from './style.css';
 import Trip from '../../components/trip/trip';
-import { serverURL } from '../../api/backend_request';
+import { serverURL, getData } from '../../api/backend_request';
+import { headerScale } from '../../global/scales';
 
 export default function Quotation_Display({ navigation, route }) {
   const [order, setOrder] = useState(null);
@@ -22,18 +23,19 @@ export default function Quotation_Display({ navigation, route }) {
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
-    fetch(`${serverURL}/orders/offer/${route.params.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          setOrder(data.data);
-          setStartDate(convertibleStartDate(data.data.start));
-          setEndDate(convertibleEndDate(data.data.end));
-          setNbDays(getnbDays(data.data.start, data.data.end));
-          setNbNights(getNbNights(data.data.start, data.data.end));
-          setStatus(data.data.status);
-        }
-      });
+    (async () => {
+      const res = await getData('/orders/offer/' + route.params.id);
+
+      if (res.result) {
+        const { start, end, status } = res.data;
+        setOrder(res.data);
+        setStartDate(convertibleStartDate(start));
+        setEndDate(convertibleEndDate(end));
+        setNbDays(getnbDays(start, end));
+        setNbNights(getNbNights(start, end));
+        setStatus(status);
+      }
+    })();
   }, []);
 
   const handleButtonReceived = () => {
@@ -64,7 +66,7 @@ export default function Quotation_Display({ navigation, route }) {
   return (
     <>
       <ScrollView style={styles.mainContainer}>
-        <Text style={styles.header}>Destination</Text>
+        <Text style={{ ...styles.header, ...headerScale }}>Destination</Text>
         {order ? (
           <Trip
             {...order.trip}
@@ -88,8 +90,7 @@ export default function Quotation_Display({ navigation, route }) {
                 : status === 'Received'
                 ? styles.received
                 : styles.validated,
-            ]}
-          >
+            ]}>
             {' '}
             Quotation status : <Text style={{ fontFamily: 'txtBold' }}>
               {status}
@@ -120,8 +121,7 @@ export default function Quotation_Display({ navigation, route }) {
                   alignItems: 'center',
                   display: 'flex',
                 },
-              ]}
-            >
+              ]}>
               {order.comments}
             </Text>
           </View>
@@ -140,8 +140,7 @@ export default function Quotation_Display({ navigation, route }) {
           {order ? (
             <TouchableOpacity
               style={styles.programButton}
-              onPress={() => Linking.openURL(`${order.trip.program[0].programPDF}`)}
-            >
+              onPress={() => Linking.openURL(`${order.trip.program[0].programPDF}`)}>
               <Text style={styles.textButtons}> Download program (PDF)</Text>
             </TouchableOpacity>
           ) : (
@@ -150,20 +149,20 @@ export default function Quotation_Display({ navigation, route }) {
           {status === 'Received' ? (
             <TouchableOpacity
               style={styles.validationButton}
-              onPress={handleButtonReceived}
-            >
+              onPress={handleButtonReceived}>
               <Text style={styles.textButtons}> Accept quotation</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               style={styles.validationButton}
-              onPress={() => navigation.navigate({ name: 'MyQuotations' })}
-            >
+              onPress={() => navigation.navigate({ name: 'MyQuotations' })}>
               <Text style={styles.textButtons}> Go back to your quotations</Text>
             </TouchableOpacity>
           )}
 
-          <TouchableOpacity style={styles.contact} onPress={() => dialCall('0650388510')}>
+          <TouchableOpacity
+            style={styles.contact}
+            onPress={() => dialCall('0650388510')}>
             <Contact style={styles.contactIcon} />
             <Text style={styles.textContact}> Contact EZ-TRIP </Text>
           </TouchableOpacity>

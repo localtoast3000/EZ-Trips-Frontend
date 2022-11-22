@@ -63,15 +63,16 @@
 }
 
 .buttonConfirm {
-  margin-top: 30px;
+  margin-top: 40px;
+  width: 100%;
+  align-self: center;
+  background-color: black;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
   height: 50px;
-  font-size: 20px;
+  border-radius: 10px;
 }
 .confirmBtnTxt {
   color: white;
   font-family: 'txtMedium';
-  font-size: 16px;
 }

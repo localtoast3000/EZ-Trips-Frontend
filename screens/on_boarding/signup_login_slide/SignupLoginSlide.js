@@ -44,7 +44,10 @@ export default function SignupLogoinSlide({ progressPos, slideLength, navigation
 
   return (
     <>
-      <FadeContainer style={styles.slideContainer} isVisible={isVisible} speed={250}>
+      <FadeContainer
+        style={styles.slideContainer}
+        isVisible={isVisible}
+        speed={250}>
         <Logo
           containerStyle={styles.logoContainer}
           color={onBoarding.header}
@@ -88,12 +91,17 @@ export default function SignupLogoinSlide({ progressPos, slideLength, navigation
         statusBarTranslucent={true}
         transparent={true}
         visible={Object.values(forms).some((form) => form === true)}
-        animationType='fade'
-      >
+        animationType='fade'>
         {forms.login ? (
-          <LoginForm onClosePress={() => resetForms()} navigation={navigation} />
+          <LoginForm
+            onClosePress={() => resetForms()}
+            navigation={navigation}
+          />
         ) : forms.signUp ? (
-          <SignUpForm onClosePress={() => resetForms()} navigation={navigation} />
+          <SignUpForm
+            onClosePress={() => resetForms()}
+            navigation={navigation}
+          />
         ) : (
           <></>
         )}
@@ -107,8 +115,7 @@ function FormBtn({ style, text, onPress, txtColor }) {
     <TouchableOpacity
       style={{ ...styles.btn, ...style }}
       onPress={onPress}
-      activeOpacity={0.8}
-    >
+      activeOpacity={0.8}>
       <Text style={{ ...styles.btnTxt, color: txtColor }}>{text}</Text>
     </TouchableOpacity>
   );
@@ -118,7 +125,9 @@ function SeeCatalogBtn({ onPress }) {
   const { onBoarding } = useTheme();
 
   return (
-    <TouchableOpacity style={styles.seeCatalogBtn} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.seeCatalogBtn}
+      onPress={onPress}>
       <Text style={{ ...styles.seeCatalogTxt, color: onBoarding.seeCatalogTxt }}>
         See the catalog
       </Text>
@@ -131,8 +140,10 @@ function BtnsDivider() {
 
   const Bar = () => (
     <View
-      style={{ ...styles.dividerBar, backgroundColor: onBoarding.signupLoginDividerBar }}
-    ></View>
+      style={{
+        ...styles.dividerBar,
+        backgroundColor: onBoarding.signupLoginDividerBar,
+      }}></View>
   );
 
   return (

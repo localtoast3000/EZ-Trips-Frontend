@@ -1,18 +1,17 @@
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { Video } from 'expo-av';
-import { Dimensions } from 'react-native';
-import { useEffect } from 'react';
 
-export default function VideoBackground({ source, layerOpacity, children }) {
-  useEffect(() => {
-    console.log('Hello');
-  }, []);
-
+export default function VideoBackground({ onLoad, source, layerOpacity, children }) {
   return (
     <View style={{ flex: 1, width: '100%' }}>
       <Video
         source={source}
-        style={{ left: 0, right: 0, bottom: 0, height: Dimensions.get('window').height + 70 }}
+        style={{
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: Dimensions.get('window').height + 70,
+        }}
         useNativeControls={false}
         resizeMode='cover'
         isLooping

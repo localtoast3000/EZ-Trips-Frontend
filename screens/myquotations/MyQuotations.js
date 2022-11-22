@@ -10,6 +10,7 @@ import { getData } from '../../api/backend_request';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../reducers/user';
 import { headerScale } from '../../global/scales';
+import { inspect } from '../../lib/inspector';
 
 export default function MyQuotations() {
   const loadedFonts = loadFonts();
@@ -21,17 +22,18 @@ export default function MyQuotations() {
     (async () => {
       const res = await getData('/orders/' + user.token);
       if (res.result) {
+        inspect(res);
         const totalRequests = [];
         const totalQuotations = [];
         for (let order of res.data) {
           if (
             order.status === 'Requested' &&
-            !totalRequests.some((e) => e._id === order._id)
+            !totalRequests.some((odr) => odr._id === order._id)
           ) {
             totalRequests.unshift(order);
           } else if (
             order.status === 'Received' &&
-            !totalQuotations.some((e) => e._id === order._id)
+            !totalQuotations.some((odr) => odr._id === order._id)
           ) {
             totalQuotations.unshift(order);
           }
@@ -47,16 +49,16 @@ export default function MyQuotations() {
   let sentDisplay = <Text style={{ fontFamily: 'txt' }}>No quotation asked yet.</Text>;
 
   if (requestSent.length > 0) {
-    sentDisplay = requestSent.map((data, i) => {
-      let start = data.start.slice(5, 10);
-      let end = data.end.slice(5, 10);
+    sentDisplay = requestSent.map((order, i) => {
+      let start = order.start.slice(5, 10);
+      let end = order.end.slice(5, 10);
 
       return (
         <View
           key={i}
           style={styles.tripQuoteStatusContainer}>
           <Quote
-            travelerQty={data.nbTravellers}
+            travelerQty={order.nbTravelers}
             containerStyles={styles.tripCardContainer}
             topElementsContainerStyles={styles.tripCardTopElementsContainer}
             countryStyles={styles.tripCardCountry}
@@ -64,11 +66,12 @@ export default function MyQuotations() {
             titleStyles={styles.tripCardTitle}
             dateStyles={styles.tripCardDate}
             priceStyles={styles.tripCardPrice}
-            id={data._id}
-            price={data.totalPrice}
-            country={data.trip.country}
-            background={data.trip.background}
-            name={data.trip.name}
+            status={order.status}
+            id={order._id}
+            price={order.totalPrice}
+            country={order.trip.country}
+            background={order.trip.background}
+            name={order.trip.name}
             start={start}
             end={end}
           />
@@ -98,6 +101,7 @@ export default function MyQuotations() {
             titleStyles={styles.tripCardTitle}
             dateStyles={styles.tripCardDate}
             priceStyles={styles.tripCardPrice}
+            status={data.status}
             id={data._id}
             price={data.totalPrice}
             country={data.trip.country}
@@ -135,7 +139,7 @@ export default function MyQuotations() {
               color={'black'}
             />
           }
-          trips={sentDisplay}
+          trips={quotationDisplay}
         />
         <View style={{ height: 100 }}></View>
       </View>

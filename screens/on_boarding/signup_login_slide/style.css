@@ -31,22 +31,19 @@
   font-size: 16;
   font-family: 'txt';
 }
-.bottomContainer {
-  align-items: center;
-  top: 50;
-}
+
 .seeCatalogBtn {
+  margin-top: 30px;
   align-items: center;
   justify-content: center;
   height: 60px;
-  width: 200;
+  width: 200px;
 }
 .seeCatalogTxt {
-  margin-top: 6px;
-  flex: 1;
   font-family: 'txt';
   font-size: 18;
   text-align: center;
+  z-index: -1;
 }
 .btn {
   justify-self: center;

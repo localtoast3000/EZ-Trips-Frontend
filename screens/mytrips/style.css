@@ -15,15 +15,13 @@
   align-items: flex-end;
   justify-content: center;
   height: 40px;
-  border-radius: 10px;
   margin-right: 10px;
-  background-color: #177861;
   padding: 5px;
 }
 
 .documentBtnTxt {
   font-family: 'txt';
-  color: white;
+  color: black;
   padding: 0 5px;
 }
 .border {

@@ -14,7 +14,7 @@ import Logo from '../../components/logo/Logo';
 import VideoBackground from '../../components/video_background/VideoBackground';
 import canyonVideo from '../../assets/videos/Canyon.mp4';
 
-export default function OnBoarding({ navigation }) {
+export default function OnBoarding({ navigation, route: { params } }) {
   const loadedFonts = loadFonts();
   const { onBoarding } = useTheme();
   const animationSpeed = 250;
@@ -42,16 +42,16 @@ export default function OnBoarding({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <VideoBackground source={canyonVideo} layerOpacity={0.5}>
+      <VideoBackground
+        source={canyonVideo}
+        layerOpacity={0.5}>
         {(absoluteStyle) => (
           <SwipeContainer
             style={{ ...absoluteStyle, ...styles.swipeContainer }}
-            onSwipe={({ direction }) => setDirection(direction)}
-          >
+            onSwipe={({ direction }) => setDirection(direction)}>
             <FadeContainer
               isVisible={progress === slides.length ? false : true}
-              speed={animationSpeed}
-            >
+              speed={animationSpeed}>
               <ProgressBar
                 slideQty={slides.length}
                 currentSlide={progress}
@@ -64,11 +64,12 @@ export default function OnBoarding({ navigation }) {
               currentSlide={progress}
               slideLength={slides.length}
               disableAnimation={animating ? true : false}
-              onAnimation={() => setAnimating(true)}
-            >
+              onAnimation={() => setAnimating(true)}>
               {slides.map((Slide, i) => {
                 return (
-                  <View key={i} style={{ width: '100%' }}>
+                  <View
+                    key={i}
+                    style={{ width: '100%' }}>
                     <Slide
                       isVisible={progress === i + 1 ? true : false}
                       direction={direction}
@@ -84,8 +85,7 @@ export default function OnBoarding({ navigation }) {
               <View style={styles.paddingBox}></View>
               <FadeContainer
                 isVisible={progress > 1 ? false : true}
-                speed={animationSpeed}
-              >
+                speed={animationSpeed}>
                 <Text style={{ ...styles.welcomeTxt, color: onBoarding.welcomeTxt }}>
                   Welcome
                 </Text>
@@ -93,12 +93,10 @@ export default function OnBoarding({ navigation }) {
               <PulsingContainer
                 style={styles.paddingBox}
                 isVisible={progress < slides.length ? true : false}
-                speed={animationSpeed}
-              >
+                speed={animationSpeed}>
                 <TouchableOpacity
                   onPress={() => setDirection({ direction: 'left' })}
-                  activeOpacity={1}
-                >
+                  activeOpacity={1}>
                   <SwipeArrow />
                 </TouchableOpacity>
               </PulsingContainer>
@@ -114,8 +112,13 @@ function TitleSlide(props) {
   const { onBoarding } = useTheme();
 
   return (
-    <FadeContainer {...props} style={styles.slideContainer}>
-      <Logo color={onBoarding.header} size={Dimensions.get('window').width / 3.2} />
+    <FadeContainer
+      {...props}
+      style={styles.slideContainer}>
+      <Logo
+        color={onBoarding.header}
+        size={Dimensions.get('window').width / 3.2}
+      />
     </FadeContainer>
   );
 }
@@ -124,7 +127,9 @@ function SecondSlide(props) {
   const { onBoarding } = useTheme();
 
   return (
-    <View {...props} style={styles.slideContainer}>
+    <View
+      {...props}
+      style={styles.slideContainer}>
       <Text style={{ ...styles.descriptionSlideHeader, color: onBoarding.text }}>
         A human adventure
       </Text>
@@ -141,7 +146,9 @@ function ThirdSlide(props) {
   const { onBoarding } = useTheme();
 
   return (
-    <View {...props} style={styles.slideContainer}>
+    <View
+      {...props}
+      style={styles.slideContainer}>
       <Text style={{ ...styles.descriptionSlideHeader, color: onBoarding.text }}>
         Quality service
       </Text>
@@ -158,7 +165,9 @@ function FourthSlide(props) {
   const { onBoarding } = useTheme();
 
   return (
-    <View {...props} style={styles.slideContainer}>
+    <View
+      {...props}
+      style={styles.slideContainer}>
       <Text style={{ ...styles.descriptionSlideHeader, color: onBoarding.text }}>
         Commited partners
       </Text>
