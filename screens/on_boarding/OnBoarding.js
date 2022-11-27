@@ -46,7 +46,7 @@ export default function OnBoarding({ navigation }) {
     <View style={styles.container}>
       <VideoBackground
         source={canyonVideo}
-        layerOpacity={videoIsPlaying ? 0.5 : 1}
+        layerOpacity={videoIsPlaying ? 0.5 : 0.5}
         onStatusChange={(status) => setVideoIsPlaying(status.isPlaying)}>
         {videoIsPlaying
           ? (absoluteStyle) => (
